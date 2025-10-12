@@ -1,0 +1,326 @@
+openapi: 3.0.4
+info:
+  title: My Expense Tracker - OpenAPI 3.0
+  description: >-
+    This is an expense tracker that I am making to practice my full stack coding
+    skills.
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+servers:
+  - url: https://localhost:4747
+tags:
+  - name: Expense Routes
+    description: ''
+  - name: User Routes
+    description: ''
+paths:
+  /expenses:
+    summary: Returns Expenses
+    description: Returns a chronologically ordered list of expenses
+    get:
+      summary: Gets all expenses for a user.
+      description: >-
+        This endpoint returns a newest first chronologically ordered list of
+        expenses.
+      operationId: get_expense_all
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                ok:
+                  value: |-
+                    [
+                      {
+                        "expense_id": 3,
+                        "user_id": "47",
+                        "expense_date": "03/04/03",
+                        "expense_amount": 47,
+                        "account_paid_from": "checking",
+                        "category_id": 1,
+                        "paid_to": "Smith's Grocery Store",
+                        "notes": "here is a note"
+                      },
+                      {
+                        "expense_id": 2,
+                        "user_id": "47",
+                        "expense_date": "02/03/03",
+                        "expense_amount": 474,
+                        "account_paid_from": "credit card 1234",
+                        "category_id": 2,
+                        "paid_to": "Doe's Gas Station",
+                        "notes": ""
+                      },
+                      {
+                        "expense_id": 1,
+                        "user_id": "47",
+                        "expense_date": "01/02/03",
+                        "expense_amount": 4747,
+                        "account_paid_from": "savings",
+                        "category_id": 3,
+                        "paid_to": "Someone Else",
+                        "notes": "Someone needed some money."
+                      }
+                    ]
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              examples:
+                Not Authorized:
+                  value:
+                    msg: You must be logged in to perform this action
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                internal server error:
+                  value: 
+                    msg: Something went wrong, please try again.                    
+      tags:
+        - Expense Routes
+  /expense:
+    summary: handles crud operations on an expense
+    description: This will be the path to handle PUT, POST and DELETE requests.
+    post:
+      summary: Create an expense.
+      description: Takes an expense from the client and sends to the database
+      operationId: post_expense
+      requestBody:
+        description: expense data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    msg: "expense has been recorded"
+                    expense_id: 47
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              examples:
+                not authorized:
+                  value:
+                    msg: You must be logged in to perform this action
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                internal server error:
+                  value: 
+                    msg: Something went wrong, please try again.
+      tags:
+        - Expense Routes
+  /expense/{expense_id}:
+    summary: handles expense specific operations
+    parameters:
+      - name: expense_id
+        in: path
+        required: true
+        description: the id of the expense we seek to edit
+        schema:
+          type: string
+    put:
+      summary: Edits an expense
+      description: Takes client data and updates an expense
+      operationId: put_expense_id
+      requestBody:
+        description: updated expense data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseUpdate'            
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    msg: "expense has been updated"
+                    expense_id: 47
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              examples:
+                not authorized:
+                  value:
+                    msg: You must be logged in to perform this action
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                internal server error:
+                  value: 
+                    msg: Something went wrong, please try again.
+      tags:
+        - Expense Routes
+    delete:
+      summary: deletes an expense
+      description: >-
+        Deletes an expense given an expense id and the user enters their
+        password
+      operationId: delete_expense
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              examples:
+                not authorized:
+                  value:
+                    msg: You must be logged in to perform this action
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                internal server error:
+                  value: 
+                    msg: Something went wrong, please try again.
+      tags:
+        - Expense Routes        
+  /user/login:
+    summary: Logs in a user
+    description: Logs in a user.
+    post:
+      summary: Logs in a user
+      description: Logs in a user.
+      operationId: user_login
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - User Routes
+  /user/logout:
+    summary: logs out a user
+    description: Logs out the current user,
+    get:
+      summary: Logs out a user
+      description: Logs out the currently logged in user.
+      operationId: user_logout
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - User Routes
+  /user:
+    summary: Will handle user operations
+    description: Will handle user operations.
+    get:
+      summary: get current user data
+      description: Retrieves user data from the database and returns it to the client.
+      operationId: get_user
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - User Routes
+    post:
+      summary: Creates a user
+      description: Takes in the user data from the client and creates a user account.
+      operationId: post_user
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - User Routes
+  # /user/{id}:
+  #   summary: handle specific user
+  #   description: Handles routes to deal with a specific user
+  #   put:
+  #     summary: Edits user data
+  #     description: Takes updated user data and updates the database
+  #     operationId: put_user_id
+  #     responses:
+  #       default:
+  #         description: Default error sample response
+  #     tags:
+  #       - User Routes
+    delete:
+      summary: delete a user
+      description: Deletes a users account.
+      operationId: delete_user
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - User Routes
+components:
+  schemas:
+    Expense:
+      type: object
+      properties:
+        date:
+          type: string
+          example: 03/04/03
+        amount:
+          type: integer
+          format: int32
+          example: 474
+        account_paid_from:
+          type: string
+          example: checking
+        category:
+          type: integer
+          format: int32
+          example: 2
+        paid_to:
+          type: string
+          example: John Doe's Unicorn Shop
+        notes:
+          type: string
+          example: Bought unicorn feed
+    ExpenseUpdate:
+      type: object
+      properties:
+        expense_id:
+          type: integer
+          format: int32
+          example: 47
+        date:
+          type: string
+          example: 03/04/03
+        amount:
+          type: integer
+          format: int32
+          example: 47
+        account_paid_from:
+          type: string
+          example: checking
+        category:
+          type: integer
+          format: int32
+          example: 2
+        paid_to:
+          type: string
+          example: John Doe's Unicorn Shop
+        notes:
+          type: string
+          example: Bought unicorn feed          
