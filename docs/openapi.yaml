@@ -182,8 +182,7 @@ paths:
     delete:
       summary: deletes an expense
       description: >-
-        Deletes an expense given an expense id and the user enters their
-        password
+        Deletes an expense given an expense id
       operationId: delete_expense
       responses:
         '204':
@@ -211,11 +210,42 @@ paths:
     description: Logs in a user.
     post:
       summary: Logs in a user
-      description: Logs in a user.
+      description: Takes user credentials as JSON data in the request body and attempts to
+        log in the user.
       operationId: user_login
+      requestBody:
+        description: User login credentials.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login_credentials'      
       responses:
-        default:
-          description: Default error sample response
+        '200':
+          description: ok
+        '401':
+          description: bad request
+          content:
+            application/json:
+              examples:
+                bad request:
+                  value:
+                    msg: Bad credentials, please try again.
+        '404':
+          description: user not found
+          content:
+            application/json:
+              examples:
+                user not found:
+                  value:
+                    msg: We could not find a user with that username.
+        '500':
+          description: internal server error
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                server error:
+                  value: Something went wrong on our end, please try again.
       tags:
         - User Routes
   /user/logout:
@@ -323,4 +353,13 @@ components:
           example: John Doe's Unicorn Shop
         notes:
           type: string
-          example: Bought unicorn feed          
+          example: Bought unicorn feed
+    Login_credentials:
+      type: object
+      properties:
+        username:
+          type: string
+          example: Unicorn Princess
+        password:
+          type: string
+          example: sparkle47
