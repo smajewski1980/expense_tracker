@@ -242,10 +242,11 @@ paths:
         '500':
           description: internal server error
           content:
-            text/plain; charset=utf-8:
+            application/json:
               examples:
                 server error:
-                  value: Something went wrong on our end, please try again.
+                  value:
+                    msg: Something went wrong on our end, please try again.
       tags:
         - User Routes
   /user/logout:
@@ -253,32 +254,69 @@ paths:
     description: Logs out the current user,
     get:
       summary: Logs out a user
-      description: Logs out the currently logged in user.
+      description: Logs out the current user.
       operationId: user_logout
       responses:
-        default:
-          description: Default error sample response
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                logout success:
+                  value: 
+                    msg: The user is now logged out.
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                server error:
+                  value:
+                    msg: Something went wrong on our end, please try again.
       tags:
         - User Routes
   /user:
     summary: Will handle user operations
     description: Will handle user operations.
     get:
-      summary: get current user data
-      description: Retrieves user data from the database and returns it to the client.
+      summary: get current login status
+      description: Returns a username if a user is logged in.
       operationId: get_user
       responses:
-        default:
-          description: Default error sample response
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                ok:
+                  value:
+                    username: "Unicorn Princess" 
+        '401':
+          description: not authorized
       tags:
         - User Routes
     post:
       summary: Creates a user
       description: Takes in the user data from the client and creates a user account.
       operationId: post_user
+      requestBody:
+        description: Info to create a new user.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login_credentials'      
       responses:
-        default:
-          description: Default error sample response
+        '201':
+          description: created
+        '400':
+          description: bad request
+          content:
+            application/json:
+              examples:
+                bad request:
+                  value:
+                    msg: "Please check your fields and try again"           
       tags:
         - User Routes
   # /user/{id}:
@@ -298,8 +336,24 @@ paths:
       description: Deletes a users account.
       operationId: delete_user
       responses:
-        default:
-          description: Default error sample response
+        '204':
+          description: no content
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              examples:
+                not authorized:
+                  value:
+                    msg: You must be logged in to perform this action
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                server error:
+                  value:
+                    msg: Something went wrong on our end, please try again.                    
       tags:
         - User Routes
 components:
