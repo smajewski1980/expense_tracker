@@ -314,7 +314,7 @@ paths:
               examples:
                 ok:
                   value:
-                    username: "Unicorn Princess" 
+                    current_user: "unicorn_princess@email.com" 
         '401':
           description: not authorized
           content:
@@ -475,18 +475,21 @@ components:
     Login_credentials:
       type: object
       properties:
-        username:
+        email:
           type: string
-          example: Unicorn Princess
+          example: unicorn_princess@email.com
         password:
+          type: string
+          example: sparkle47
+        passwordConf:
           type: string
           example: sparkle47
     Login_credentials_update:
       type: object
       properties:
-        username:
+        email:
           type: string
-          example: Unicorn Princess
+          example: unicorn_princess@email.com
         old_password:
           type: string
           example: sparkle47          
