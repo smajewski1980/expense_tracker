@@ -1,5 +1,6 @@
 const { validationResult } = require('../node_modules/express-validator');
-function postUserController(req, res, next) {
+const pool = require('../database/db_connect');
+async function postUserController(req, res, next) {
   const result = validationResult(req);
   const { email, password, passwordConf } = req.body;
 
@@ -14,7 +15,11 @@ function postUserController(req, res, next) {
   }
 
   if (result.isEmpty()) {
-    return res.sendStatus(200);
+    const result = await pool.query(
+      'INSERT INTO users(user_email, password) VALUES($1, $2)RETURNING user_id',
+      [email, password],
+    );
+    return res.status(201).send(result.rows[0].user_id);
   }
 
   res.status(400).json(result.errors);

@@ -339,6 +339,12 @@ paths:
       responses:
         '201':
           description: created
+          content:
+            application/json:
+              examples:
+                created:
+                  value:
+                    id: 47           
         '400':
           description: bad request
           content:
@@ -346,7 +352,7 @@ paths:
               examples:
                 bad request:
                   value:
-                    msg: "Please check your fields and try again"           
+                    msg: "Please check your fields and try again" 
       tags:
         - User Routes
     put:
