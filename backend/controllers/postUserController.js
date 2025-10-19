@@ -15,11 +15,15 @@ async function postUserController(req, res, next) {
   }
 
   if (result.isEmpty()) {
-    const result = await pool.query(
-      'INSERT INTO users(user_email, password) VALUES($1, $2)RETURNING user_id',
-      [email, password],
-    );
-    return res.status(201).send(result.rows[0].user_id);
+    try {
+      const result = await pool.query(
+        'INSERT INTO users(user_email, password) VALUES($1, $2)RETURNING user_id',
+        [email, password],
+      );
+      return res.status(201).send(result.rows[0].user_id);
+    } catch (error) {
+      return next(new Error(error));
+    }
   }
 
   res.status(400).json(result.errors);

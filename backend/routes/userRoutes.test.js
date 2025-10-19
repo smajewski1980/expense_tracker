@@ -7,6 +7,7 @@ const {
   badEmailUser,
   badPwUser,
   badPwConfUser,
+  duplicateEmailUser,
 } = require('./testResources');
 
 describe('POST /user', () => {
@@ -59,6 +60,15 @@ describe('POST /user', () => {
       expect(cleanupRes.rowCount).toBe(0);
     });
 
-    it('returns a 400 if email is already taken', () => {});
+    it('returns a 500 error if email is already taken', async () => {
+      const res = await request(app)
+        .post('/user')
+        .send(duplicateEmailUser)
+        .expect(500);
+
+      expect(res.body).toBe(
+        'error: duplicate key value violates unique constraint "users_user_email_key"',
+      );
+    });
   });
 });

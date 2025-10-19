@@ -22,9 +22,16 @@ const badPwConfUser = {
   passwordConf: 'xxxxxxx',
 };
 
+const duplicateEmailUser = {
+  email: 'duplicateEmailUser@email.com',
+  password: 'xxxxx',
+  passwordConf: 'xxxxx',
+};
+
 module.exports = {
   goodUser,
   badEmailUser,
   badPwUser,
   badPwConfUser,
+  duplicateEmailUser,
 };
