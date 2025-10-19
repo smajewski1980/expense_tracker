@@ -40,4 +40,10 @@ describe('POST /user', () => {
       expect(res.body.length).toBeGreaterThan(0);
     });
   });
+
+  describe('creates a user account', () => {
+    it('creatues a user account and returns a 201 with the users new id', () => {});
+
+    it('returns a 400 if email is already taken', () => {});
+  });
 });
