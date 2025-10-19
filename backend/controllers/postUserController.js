@@ -1,5 +1,8 @@
 const { validationResult } = require('../node_modules/express-validator');
 const pool = require('../database/db_connect');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 async function postUserController(req, res, next) {
   const result = validationResult(req);
   const { email, password, passwordConf } = req.body;
@@ -16,11 +19,12 @@ async function postUserController(req, res, next) {
 
   if (result.isEmpty()) {
     try {
-      const result = await pool.query(
-        'INSERT INTO users(user_email, password) VALUES($1, $2)RETURNING user_id',
-        [email, password],
-      );
-      return res.status(201).send(result.rows[0].user_id);
+      const hashedPw = await bcrypt.hash(password, saltRounds);
+      const poolRes = await pool.query(
+        'INSERT INTO users(user_email, password) VALUES($1, $2) RETURNING user_id',
+        [email, hashedPw],
+      ); // still a problem with the db entry having dbl quotes around it
+      return res.status(201).send(poolRes.rows[0].user_id);
     } catch (error) {
       return next(new Error(error));
     }
