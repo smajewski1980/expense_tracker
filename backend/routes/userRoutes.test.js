@@ -8,6 +8,10 @@ const {
   badPwUser,
   badPwConfUser,
   duplicateEmailUser,
+  testLoginUser,
+  checkValidation,
+  testBadLoginPwUser,
+  testBadLoginEmailUser,
 } = require('./testResources');
 
 describe('POST /user', () => {
@@ -17,9 +21,7 @@ describe('POST /user', () => {
         .post('/user')
         .send(badEmailUser)
         .set('Accept', 'application/json');
-      expect(res.status).toBe(400);
-      expect(res.body).toBeInstanceOf(Array);
-      expect(res.body.length).toBeGreaterThan(0);
+      checkValidation(res);
     });
 
     it('returns a 400 if password is invalid', async () => {
@@ -27,9 +29,7 @@ describe('POST /user', () => {
         .post('/user')
         .send(badPwUser)
         .set('Accept', 'application/json');
-      expect(res.status).toBe(400);
-      expect(res.body).toBeInstanceOf(Array);
-      expect(res.body.length).toBeGreaterThan(0);
+      checkValidation(res);
     });
 
     it('returns a 400 if passwordConf is invalid', async () => {
@@ -37,9 +37,7 @@ describe('POST /user', () => {
         .post('/user')
         .send(badPwConfUser)
         .set('Accept', 'application/json');
-      expect(res.status).toBe(400);
-      expect(res.body).toBeInstanceOf(Array);
-      expect(res.body.length).toBeGreaterThan(0);
+      checkValidation(res);
     });
   });
 
@@ -70,5 +68,45 @@ describe('POST /user', () => {
         'error: duplicate key value violates unique constraint "users_user_email_key"',
       );
     });
+  });
+});
+
+describe('POST /user/login', () => {
+  describe('invalid form data', () => {
+    it('returns a 400 if email is invalid', async () => {
+      const res = await request(app)
+        .post('/user/login')
+        .send({ email: badEmailUser.email, password: badEmailUser.password })
+        .set('Accept', 'application/json');
+      checkValidation(res);
+    });
+
+    it('returns a 400 if password is invalid', async () => {
+      const res = await request(app)
+        .post('/user/login')
+        .send({ email: badPwUser.email, password: badPwUser.password })
+        .set('Accept', 'application/json');
+      checkValidation(res);
+    });
+  });
+
+  it('returns 200 and a session cookie if given good credentials', async () => {
+    const res = await request(app)
+      .post('/user/login')
+      .send(testLoginUser)
+      .expect(200);
+    expect(res.headers['set-cookie']).toBeDefined();
+    expect(res.headers['set-cookie'][0]).toMatch(/connect.sid=/);
+  });
+
+  it('returns 400 if given bad credentials', async () => {
+    await request(app).post('/user/login').send(testBadLoginPwUser).expect(400);
+  });
+
+  it('returns 404 if given nonexistant user', async () => {
+    await request(app)
+      .post('/user/login')
+      .send(testBadLoginEmailUser)
+      .expect(404);
   });
 });

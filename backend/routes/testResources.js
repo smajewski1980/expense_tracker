@@ -28,10 +28,35 @@ const duplicateEmailUser = {
   passwordConf: 'xxxxx',
 };
 
+const testLoginUser = {
+  email: 'test_login@email.com',
+  password: 'testpassword',
+};
+
+const testBadLoginPwUser = {
+  email: 'test_login@email.com',
+  password: 'testpasswor',
+};
+
+const testBadLoginEmailUser = {
+  email: 'test_logi@email.com',
+  password: 'testpassword',
+};
+
+function checkValidation(res) {
+  expect(res.status).toBe(400);
+  expect(res.body).toBeInstanceOf(Array);
+  expect(res.body.length).toBeGreaterThan(0);
+}
+
 module.exports = {
   goodUser,
   badEmailUser,
   badPwUser,
   badPwConfUser,
   duplicateEmailUser,
+  testLoginUser,
+  checkValidation,
+  testBadLoginPwUser,
+  testBadLoginEmailUser,
 };

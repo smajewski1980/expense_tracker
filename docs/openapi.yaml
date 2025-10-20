@@ -247,14 +247,14 @@ paths:
       responses:
         '200':
           description: ok
-        '401':
-          description: not authorized
+        '400':
+          description: bad request
           content:
             application/json:
               examples:
-                not authorized:
+                bad request:
                   value:
-                    msg: Bad credentials, please try again.
+                    msg: invalid password, please try again.
         '404':
           description: user not found
           content:
@@ -485,9 +485,6 @@ components:
           type: string
           example: unicorn_princess@email.com
         password:
-          type: string
-          example: sparkle47
-        passwordConf:
           type: string
           example: sparkle47
     Login_credentials_update:
