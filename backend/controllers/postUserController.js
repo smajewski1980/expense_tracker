@@ -63,7 +63,7 @@ async function postUserLoginController(req, res, next) {
     }
   }
 
-  res.status(400).json(result.errors);
+  return res.status(400).json(result.errors);
 }
 
 module.exports = { postUserController, postUserLoginController };
