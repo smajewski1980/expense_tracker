@@ -144,6 +144,6 @@ describe('GET /user', () => {
     await agent.post('/user/login').send(testLoginUser).expect(200);
     // get the user
     const res = await agent.get('/user').expect(200);
-    expect(res.body.user_email).toBe(testLoginUser.user_email);
+    expect(res.body.user_email).toBe(testLoginUser.email);
   });
 });
