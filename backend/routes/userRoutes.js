@@ -5,6 +5,7 @@ const {
   postUserController,
   postUserLoginController,
 } = require('../controllers/postUserController');
+const getUserController = require('../controllers/getUserController');
 
 // create a new user
 router.post(
@@ -22,5 +23,7 @@ router.post(
   body('password').notEmpty().isLength({ min: 5, max: 20 }).escape(),
   postUserLoginController,
 );
+
+router.get('/', getUserController);
 
 module.exports = router;

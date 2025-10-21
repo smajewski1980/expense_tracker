@@ -21,7 +21,7 @@ app.get('/errortest', (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
+  // console.log(err);
   res
     .status(err.status || 500)
     .json(err.message || 'Something went wrong on our end, please try again.');

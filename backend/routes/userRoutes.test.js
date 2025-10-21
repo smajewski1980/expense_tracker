@@ -110,3 +110,19 @@ describe('POST /user/login', () => {
       .expect(404);
   });
 });
+
+describe('GET /user', () => {
+  it('returns 401 if no is logged in', async () => {
+    const res = await request(app).get('/user').expect(401);
+    expect(res.body).toBe('There is no one currently logged in.');
+  });
+
+  it('returns 200 and the current user_email', async () => {
+    // login a user
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(testLoginUser).expect(200);
+    // get the user
+    const res = await agent.get('/user').expect(200);
+    expect(res.body.user_email).toBe(testLoginUser.user_email);
+  });
+});
