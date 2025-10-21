@@ -1,3 +1,4 @@
 swagger-editor/
 /backend/node_modules
 .env
+/backend/coverage
