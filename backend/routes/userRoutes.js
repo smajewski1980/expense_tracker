@@ -6,10 +6,6 @@ const {
   postUserLoginController,
 } = require('../controllers/postUserController');
 
-router.get('/', (req, res, next) => {
-  res.sendStatus(418);
-});
-
 // create a new user
 router.post(
   '/',

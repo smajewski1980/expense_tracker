@@ -16,6 +16,10 @@ app.use(
 app.use(bodyParser.json());
 app.use('/user', userRoutes);
 
+app.get('/errortest', (req, res, next) => {
+  return next(new Error());
+});
+
 app.use((err, req, res, next) => {
   console.log(err);
   res
