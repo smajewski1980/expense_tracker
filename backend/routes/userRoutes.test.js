@@ -109,6 +109,27 @@ describe('POST /user/login', () => {
       .send(testBadLoginEmailUser)
       .expect(404);
   });
+
+  describe('check error handling if the db call is bad', () => {
+    // mock the db call to force an error from the server
+    let poolSpy;
+
+    beforeEach(() => {
+      poolSpy = jest.spyOn(pool, 'query');
+    });
+
+    afterEach(() => {
+      poolSpy.mockRestore();
+    });
+
+    it('returns 500 if there is a problem calling the database', async () => {
+      poolSpy.mockImplementation(() => null);
+      const res = await request(app)
+        .post('/user/login')
+        .send(testLoginUser)
+        .expect(500);
+    });
+  });
 });
 
 describe('GET /user', () => {
