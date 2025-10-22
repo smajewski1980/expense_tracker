@@ -109,74 +109,74 @@ describe('POST /user/login', () => {
       .send(testBadLoginEmailUser)
       .expect(404);
   });
+});
 
-  describe('GET /user', () => {
-    it('returns 401 if no is logged in', async () => {
-      const res = await request(app).get('/user').expect(401);
-      expect(res.body).toBe('There is no one currently logged in.');
-    });
-
-    it('returns 200 and the current user_email', async () => {
-      // login a user
-      const agent = request.agent(app);
-      await agent.post('/user/login').send(testLoginUser).expect(200);
-      // get the user
-      const res = await agent.get('/user').expect(200);
-      expect(res.body.user_email).toBe(testLoginUser.email);
-    });
+describe('GET /user', () => {
+  it('returns 401 if no is logged in', async () => {
+    const res = await request(app).get('/user').expect(401);
+    expect(res.body).toBe('There is no one currently logged in.');
   });
 
-  describe('GET /user/logout', () => {
-    it('returns 401 if there is not a user logged in', async () => {
-      await request(app).get('/user/logout').expect(401);
-    });
+  it('returns 200 and the current user_email', async () => {
+    // login a user
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(testLoginUser).expect(200);
+    // get the user
+    const res = await agent.get('/user').expect(200);
+    expect(res.body.user_email).toBe(testLoginUser.email);
+  });
+});
 
-    it('returns 200 with a msg if a user is logged in', async () => {
-      const agent = request.agent(app);
-      await agent.post('/user/login').send(testLoginUser).expect(200);
-      const res = await agent.get('/user/logout').expect(200);
-      expect(res.body).toBe('The user is now logged out.');
-    });
-
-    it('returns a 500 if there is a problem logging out', async () => {
-      const errMsg = 'There was a problem logging out.';
-      // mock the session destruction to trigger a 500
-      jest
-        .spyOn(session.Session.prototype, 'destroy')
-        .mockImplementationOnce((cb) => {
-          cb(new Error(errMsg));
-        });
-
-      const agent = request.agent(app);
-      // login first
-      await agent.post('/user/login').send(testLoginUser).expect(200);
-      const logoutRes = await agent.get('/user/logout').expect(500);
-      expect(logoutRes.body).toBe(errMsg);
-      expect(session.Session.prototype.destroy).toHaveBeenCalled();
-
-      jest.restoreAllMocks();
-    });
+describe('GET /user/logout', () => {
+  it('returns 401 if there is not a user logged in', async () => {
+    await request(app).get('/user/logout').expect(401);
   });
 
-  describe('check error handling if the db call is bad', () => {
-    // mock the db call to force an error from the server
-    let poolSpy;
+  it('returns 200 with a msg if a user is logged in', async () => {
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(testLoginUser).expect(200);
+    const res = await agent.get('/user/logout').expect(200);
+    expect(res.body).toBe('The user is now logged out.');
+  });
 
-    beforeEach(() => {
-      poolSpy = jest.spyOn(pool, 'query');
-    });
+  it('returns a 500 if there is a problem logging out', async () => {
+    const errMsg = 'There was a problem logging out.';
+    // mock the session destruction to trigger a 500
+    jest
+      .spyOn(session.Session.prototype, 'destroy')
+      .mockImplementationOnce((cb) => {
+        cb(new Error(errMsg));
+      });
 
-    afterEach(() => {
-      poolSpy.mockRestore();
-    });
+    const agent = request.agent(app);
+    // login first
+    await agent.post('/user/login').send(testLoginUser).expect(200);
+    const logoutRes = await agent.get('/user/logout').expect(500);
+    expect(logoutRes.body).toBe(errMsg);
+    expect(session.Session.prototype.destroy).toHaveBeenCalled();
 
-    it('returns 500 if there is a problem calling the database', async () => {
-      poolSpy.mockImplementation(() => null);
-      const res = await request(app)
-        .post('/user/login')
-        .send(testLoginUser)
-        .expect(500);
-      pool.end();
-    });
+    jest.restoreAllMocks();
+  });
+});
+
+describe('POST /user/login - check error handling if the db call is bad', () => {
+  // mock the db call to force an error from the server
+  let poolSpy;
+
+  beforeEach(() => {
+    poolSpy = jest.spyOn(pool, 'query');
+  });
+
+  afterEach(() => {
+    poolSpy.mockRestore();
+  });
+
+  it('returns 500 if there is a problem calling the database', async () => {
+    poolSpy.mockImplementation(() => null);
+    const res = await request(app)
+      .post('/user/login')
+      .send(testLoginUser)
+      .expect(500);
+    pool.end();
   });
 });
