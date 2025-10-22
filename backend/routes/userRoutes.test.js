@@ -110,6 +110,35 @@ describe('POST /user/login', () => {
       .expect(404);
   });
 
+  describe('GET /user', () => {
+    it('returns 401 if no is logged in', async () => {
+      const res = await request(app).get('/user').expect(401);
+      expect(res.body).toBe('There is no one currently logged in.');
+    });
+
+    it('returns 200 and the current user_email', async () => {
+      // login a user
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testLoginUser).expect(200);
+      // get the user
+      const res = await agent.get('/user').expect(200);
+      expect(res.body.user_email).toBe(testLoginUser.email);
+    });
+  });
+
+  describe('GET /user/logout', () => {
+    it('returns 401 if there is not a user logged in', async () => {
+      await request(app).get('/user/logout').expect(401);
+    });
+
+    it('returns 200 with a msg if a user is logged in', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testLoginUser).expect(200);
+      const res = await agent.get('/user/logout').expect(200);
+      expect(res.body).toBe('The user is now logged out.');
+    });
+  });
+
   describe('check error handling if the db call is bad', () => {
     // mock the db call to force an error from the server
     let poolSpy;
@@ -128,35 +157,7 @@ describe('POST /user/login', () => {
         .post('/user/login')
         .send(testLoginUser)
         .expect(500);
+      pool.end();
     });
-  });
-});
-
-describe('GET /user', () => {
-  it('returns 401 if no is logged in', async () => {
-    const res = await request(app).get('/user').expect(401);
-    expect(res.body).toBe('There is no one currently logged in.');
-  });
-
-  it('returns 200 and the current user_email', async () => {
-    // login a user
-    const agent = request.agent(app);
-    await agent.post('/user/login').send(testLoginUser).expect(200);
-    // get the user
-    const res = await agent.get('/user').expect(200);
-    expect(res.body.user_email).toBe(testLoginUser.email);
-  });
-});
-
-describe('GET /user/logout', () => {
-  it('returns 401 if there is not a user logged in', async () => {
-    await request(app).get('/user/logout').expect(401);
-  });
-
-  it('returns 200 with a msg if a user is logged in', async () => {
-    const agent = request.agent(app);
-    await agent.post('/user/login').send(testLoginUser).expect(200);
-    const res = await agent.get('/user/logout').expect(200);
-    expect(res.body).toBe('The user is now logged out.');
   });
 });
