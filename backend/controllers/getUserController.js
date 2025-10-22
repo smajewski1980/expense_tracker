@@ -14,10 +14,12 @@ function getUserLogoutController(req, res, next) {
     return res.sendStatus(401);
   }
   req.session.destroy((err) => {
-    if (err) return next(err);
+    if (!err) {
+      res.clearCookie('connect.sid');
+      return res.status(200).json('The user is now logged out.');
+    }
 
-    res.clearCookie('connect.sid');
-    return res.status(200).json('The user is now logged out.');
+    return next(err);
   });
 }
 

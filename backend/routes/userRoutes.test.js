@@ -1,7 +1,7 @@
 const request = require('supertest');
-const superagent = require('superagent');
 const app = require('../app');
 const pool = require('../database/db_connect');
+const session = require('express-session');
 const {
   goodUser,
   badEmailUser,
@@ -136,6 +136,25 @@ describe('POST /user/login', () => {
       await agent.post('/user/login').send(testLoginUser).expect(200);
       const res = await agent.get('/user/logout').expect(200);
       expect(res.body).toBe('The user is now logged out.');
+    });
+
+    it('returns a 500 if there is a problem logging out', async () => {
+      const errMsg = 'There was a problem logging out.';
+      // mock the session destruction to trigger a 500
+      jest
+        .spyOn(session.Session.prototype, 'destroy')
+        .mockImplementationOnce((cb) => {
+          cb(new Error(errMsg));
+        });
+
+      const agent = request.agent(app);
+      // login first
+      await agent.post('/user/login').send(testLoginUser).expect(200);
+      const logoutRes = await agent.get('/user/logout').expect(500);
+      expect(logoutRes.body).toBe(errMsg);
+      expect(session.Session.prototype.destroy).toHaveBeenCalled();
+
+      jest.restoreAllMocks();
     });
   });
 
