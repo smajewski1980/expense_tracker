@@ -147,3 +147,16 @@ describe('GET /user', () => {
     expect(res.body.user_email).toBe(testLoginUser.email);
   });
 });
+
+describe('GET /user/logout', () => {
+  it('returns 401 if there is not a user logged in', async () => {
+    await request(app).get('/user/logout').expect(401);
+  });
+
+  it('returns 200 with a msg if a user is logged in', async () => {
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(testLoginUser).expect(200);
+    const res = await agent.get('/user/logout').expect(200);
+    expect(res.body).toBe('The user is now logged out.');
+  });
+});

@@ -5,7 +5,10 @@ const {
   postUserController,
   postUserLoginController,
 } = require('../controllers/postUserController');
-const getUserController = require('../controllers/getUserController');
+const {
+  getUserController,
+  getUserLogoutController,
+} = require('../controllers/getUserController');
 
 // create a new user
 router.post(
@@ -25,5 +28,6 @@ router.post(
 );
 
 router.get('/', getUserController);
+router.get('/logout', getUserLogoutController);
 
 module.exports = router;

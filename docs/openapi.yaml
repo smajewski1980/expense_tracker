@@ -289,6 +289,14 @@ paths:
                 logout success:
                   value: 
                     msg: The user is now logged out.
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              examples:
+                Not Authorized:
+                  value:
+                    msg: You must be logged in to perform this action         
         '500':
           description: internal server error
           content:
