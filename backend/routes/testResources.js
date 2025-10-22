@@ -43,6 +43,18 @@ const testBadLoginEmailUser = {
   password: 'testpassword',
 };
 
+const resetUpdatedUser = {
+  email: 'unicorn_wizard@email.com',
+  password: 'sparkle47',
+  passwordConf: 'sparkle47',
+};
+
+const updatedUser = {
+  email: 'unicorn_wizard@email.com',
+  password: 'sparkle74',
+  passwordConf: 'sparkle74',
+};
+
 function checkValidation(res) {
   expect(res.status).toBe(400);
   expect(res.body).toBeInstanceOf(Array);
@@ -59,4 +71,6 @@ module.exports = {
   checkValidation,
   testBadLoginPwUser,
   testBadLoginEmailUser,
+  resetUpdatedUser,
+  updatedUser,
 };

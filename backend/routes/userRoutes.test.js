@@ -12,6 +12,8 @@ const {
   checkValidation,
   testBadLoginPwUser,
   testBadLoginEmailUser,
+  updatedUser,
+  resetUpdatedUser,
 } = require('./testResources');
 
 describe('POST /user', () => {
@@ -156,6 +158,76 @@ describe('GET /user/logout', () => {
     expect(session.Session.prototype.destroy).toHaveBeenCalled();
 
     jest.restoreAllMocks();
+  });
+});
+
+describe('PUT /user', () => {
+  describe('invalid form data', () => {
+    it('returns a 400 if given an invalid email', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testLoginUser).expect(200);
+      const res = await agent
+        .put('/user')
+        .send(badEmailUser)
+        .set('Accept', 'application/json');
+      checkValidation(res);
+    });
+
+    it('returns a 400 if given an invalid password', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testLoginUser).expect(200);
+      const res = await agent
+        .put('/user')
+        .send(badPwUser)
+        .set('Accept', 'application/json');
+      checkValidation(res);
+    });
+
+    it('returns a 400 if given an invalid password conf', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testLoginUser).expect(200);
+      const res = await agent
+        .put('/user')
+        .send(badPwConfUser)
+        .set('Accept', 'application/json');
+      checkValidation(res);
+    });
+  });
+
+  describe('updates user info', () => {
+    it('returns a 200 and updates user data', async () => {
+      // login the user
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(resetUpdatedUser).expect(200);
+      // update the user
+      const updRes = await agent.put('/user').send(updatedUser).expect(200);
+      expect(updRes.body).toBe('User info has been updated.');
+      // logout the user
+      await agent.get('/user/logout').expect(200);
+      // login the updated user
+      await agent.post('/user/login').send(updatedUser).expect(200);
+      // **cleanup**
+      // change the user info back
+      const cleanupRes = await agent
+        .put('/user')
+        .send(resetUpdatedUser)
+        .expect(200);
+      expect(cleanupRes.body).toBe('User info has been updated.');
+    });
+
+    it('returns a 500 if provided email is taken', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(resetUpdatedUser).expect(200);
+      await agent.put('/user').send(duplicateEmailUser).expect(500);
+    });
+
+    it('returns 401 if there is not a user logged in', async () => {
+      const res = await request(app)
+        .put('/user')
+        .send(testLoginUser)
+        .expect(401);
+      expect(res.body).toBe('There is no one currently logged in.');
+    });
   });
 });
 

@@ -9,6 +9,7 @@ const {
   getUserController,
   getUserLogoutController,
 } = require('../controllers/getUserController');
+const { putUserController } = require('../controllers/putUserController');
 
 // create a new user
 router.post(
@@ -29,5 +30,13 @@ router.post(
 
 router.get('/', getUserController);
 router.get('/logout', getUserLogoutController);
+
+router.put(
+  '/',
+  body('email').notEmpty().isEmail().escape(),
+  body('password').notEmpty().isLength({ min: 5, max: 20 }).escape(),
+  body('passwordConf').notEmpty().isLength({ min: 5, max: 20 }).escape(),
+  putUserController,
+);
 
 module.exports = router;
