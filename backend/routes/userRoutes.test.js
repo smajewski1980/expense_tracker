@@ -14,7 +14,7 @@ const {
   testBadLoginEmailUser,
   updatedUser,
   resetUpdatedUser,
-} = require('./testResources');
+} = require('../testResources');
 
 describe('POST /user', () => {
   describe('invalid form data', () => {

@@ -1,5 +1,4 @@
 const request = require('supertest');
-const superagent = require('superagent');
 const app = require('./app');
 
 describe('test the express default error handler', () => {
