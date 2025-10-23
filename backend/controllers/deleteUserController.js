@@ -10,7 +10,7 @@ async function deleteUserController(req, res, next) {
     await pool.query('DELETE FROM users WHERE user_email = $1', [currUser]);
     return res.sendStatus(204);
   } catch (error) {
-    next(new Error(error));
+    next(new Error(error)); // <-- not covered, yet...
   }
 }
 

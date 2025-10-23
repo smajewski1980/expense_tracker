@@ -248,7 +248,7 @@ describe('DELETE /user', () => {
   });
 });
 
-describe('POST /user/login - check error handling if the db call is bad', () => {
+describe('check error handling if the db call is bad', () => {
   // mock the db call to force an error from the server
   let poolSpy;
 
@@ -260,12 +260,22 @@ describe('POST /user/login - check error handling if the db call is bad', () => 
     poolSpy.mockRestore();
   });
 
-  it('returns 500 if there is a problem calling the database', async () => {
-    poolSpy.mockImplementation(() => null);
+  it('DELETE /user returns 500 if there is a prob calling the database', async () => {
     const res = await request(app)
       .post('/user/login')
       .send(testLoginUser)
-      .expect(500);
+      .expect(200);
+    expect(res.headers['set-cookie']).toBeDefined();
+    const cookie = res.headers['set-cookie'];
+    poolSpy.mockImplementation(() => {
+      throw new Error('PostgreSQL database error: Connection refused');
+    });
+    await request(app).delete('/user').set('Cookie', cookie).expect(500);
+  });
+
+  it('POST /user/login returns 500 if there is a prob calling the database', async () => {
+    poolSpy.mockImplementation(() => null);
+    await request(app).post('/user/login').send(testLoginUser).expect(500);
     pool.end();
   });
 });
