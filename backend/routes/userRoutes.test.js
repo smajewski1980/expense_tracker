@@ -14,6 +14,7 @@ const {
   testBadLoginEmailUser,
   updatedUser,
   resetUpdatedUser,
+  userToDelete,
 } = require('../testResources');
 
 describe('POST /user', () => {
@@ -228,6 +229,22 @@ describe('PUT /user', () => {
         .expect(401);
       expect(res.body).toBe('There is no one currently logged in.');
     });
+  });
+});
+
+describe('DELETE /user', () => {
+  it('returns 401 if not logged in', async () => {
+    await request(app).delete('/user').expect(401);
+  });
+
+  it('returns 204 after deleting user', async () => {
+    // create a user to delete
+    await request(app).post('/user').send(userToDelete).expect(201);
+    // login the new user
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(userToDelete).expect(200);
+    // delete the user
+    await agent.delete('/user').expect(204);
   });
 });
 

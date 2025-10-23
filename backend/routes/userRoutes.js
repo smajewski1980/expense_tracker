@@ -10,6 +10,7 @@ const {
   getUserLogoutController,
 } = require('../controllers/getUserController');
 const { putUserController } = require('../controllers/putUserController');
+const { deleteUserController } = require('../controllers/deleteUserController');
 
 // create a new user
 router.post(
@@ -28,9 +29,12 @@ router.post(
   postUserLoginController,
 );
 
+// get user info
 router.get('/', getUserController);
+// logout user
 router.get('/logout', getUserLogoutController);
 
+// update user data
 router.put(
   '/',
   body('email').notEmpty().isEmail().escape(),
@@ -38,5 +42,8 @@ router.put(
   body('passwordConf').notEmpty().isLength({ min: 5, max: 20 }).escape(),
   putUserController,
 );
+
+// delete a user
+router.delete('/', deleteUserController);
 
 module.exports = router;

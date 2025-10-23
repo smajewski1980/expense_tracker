@@ -55,6 +55,12 @@ const updatedUser = {
   passwordConf: 'sparkle74',
 };
 
+const userToDelete = {
+  email: 'user_to_delete@email.com',
+  password: 'delete_me',
+  passwordConf: 'delete_me',
+};
+
 function checkValidation(res) {
   expect(res.status).toBe(400);
   expect(res.body).toBeInstanceOf(Array);
@@ -73,4 +79,5 @@ module.exports = {
   testBadLoginEmailUser,
   resetUpdatedUser,
   updatedUser,
+  userToDelete,
 };
