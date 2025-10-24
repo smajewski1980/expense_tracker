@@ -6,6 +6,19 @@ const {
   postExpenseController,
 } = require('../controllers/postExpenseController');
 
-router.post('/', isAuth, postExpenseController);
+router.post(
+  '/',
+  isAuth,
+  body('date')
+    .notEmpty()
+    .matches(/^\d{2}-\d{2}-\d{2}$/)
+    .escape(),
+  body('expense_amount').notEmpty().isFloat({ gt: 0 }).escape(),
+  body('account_paid_from').notEmpty().isString().escape(),
+  body('category').notEmpty().isNumeric().escape(),
+  body('paid_to').notEmpty().isString().escape(),
+  body('notes').escape(),
+  postExpenseController,
+);
 
 module.exports = router;

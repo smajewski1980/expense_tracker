@@ -19,7 +19,7 @@ CREATE TABLE expenses (
   expense_id SERIAL PRIMARY KEY,
   user_email VARCHAR(50) REFERENCES users(user_email) NOT NULL,
   expense_date TIMESTAMP NOT NULL,
-  expense_amount INTEGER NOT NULL,
+  expense_amount NUMERIC NOT NULL,
   account_paid_from VARCHAR(100) NOT NULL,
   category_id integer REFERENCES categories(category_id) NOT NULL,
   paid_to VARCHAR(100) NOT NULL,

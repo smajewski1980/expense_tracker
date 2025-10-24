@@ -15,7 +15,7 @@ const {
   updatedUser,
   resetUpdatedUser,
   userToDelete,
-} = require('../testResources');
+} = require('../userTestResources');
 
 describe('POST /user', () => {
   describe('invalid form data', () => {
