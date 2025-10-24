@@ -10,9 +10,6 @@ function getUserController(req, res, next) {
 }
 
 function getUserLogoutController(req, res, next) {
-  if (!req.session.user) {
-    return res.sendStatus(401);
-  }
   req.session.destroy((err) => {
     if (!err) {
       res.clearCookie('connect.sid');

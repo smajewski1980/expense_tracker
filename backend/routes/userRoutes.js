@@ -11,6 +11,7 @@ const {
 } = require('../controllers/getUserController');
 const { putUserController } = require('../controllers/putUserController');
 const { deleteUserController } = require('../controllers/deleteUserController');
+const { isAuth } = require('../middleware/isAuth');
 
 // create a new user
 router.post(
@@ -32,11 +33,12 @@ router.post(
 // get user info
 router.get('/', getUserController);
 // logout user
-router.get('/logout', getUserLogoutController);
+router.get('/logout', isAuth, getUserLogoutController);
 
 // update user data
 router.put(
   '/',
+  isAuth,
   body('email').notEmpty().isEmail().escape(),
   body('password').notEmpty().isLength({ min: 5, max: 20 }).escape(),
   body('passwordConf').notEmpty().isLength({ min: 5, max: 20 }).escape(),
@@ -44,6 +46,6 @@ router.put(
 );
 
 // delete a user
-router.delete('/', deleteUserController);
+router.delete('/', isAuth, deleteUserController);
 
 module.exports = router;

@@ -4,10 +4,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 async function putUserController(req, res, next) {
-  if (!req.session.user) {
-    return res.status(401).json('There is no one currently logged in.');
-  }
-
   const result = validationResult(req);
   const { email, password, passwordConf } = req.body;
   const currUser = req.session.user.user_email;
