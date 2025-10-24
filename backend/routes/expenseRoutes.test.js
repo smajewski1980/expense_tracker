@@ -12,6 +12,35 @@ const {
   badPaidToExpenseTestObj,
   checkValidation,
 } = require('../expenseTestResources');
+const { testLoginUser } = require('../userTestResources');
+
+describe('check error handling for db calls', () => {
+  let poolSpy;
+
+  beforeEach(() => {
+    poolSpy = jest.spyOn(pool, 'query');
+  });
+
+  afterEach(() => {
+    poolSpy.mockRestore();
+  });
+
+  it('POST /expense returns 500 if theres a prob connecting to db', async () => {
+    const res = await request(app)
+      .post('/user/login')
+      .send(testLoginUser)
+      .expect(200);
+    const cookie = res.headers['set-cookie'];
+    poolSpy.mockImplementation(() => {
+      throw new Error('PostgreSQL database error: Connection refused');
+    });
+    await request(app)
+      .post('/expense')
+      .set('Cookie', cookie)
+      .send(newExpenseTestObj)
+      .expect(500);
+  });
+});
 
 describe('POST /expense', () => {
   afterAll(async () => {

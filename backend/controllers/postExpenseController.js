@@ -23,7 +23,7 @@ async function postExpenseController(req, res, next) {
       );
       return res.status(201).json(result.rows[0].expense_id);
     } catch (error) {
-      next(new Error(error));
+      return next(new Error(error));
     }
   }
   return res.status(400).json(vResult.errors);
