@@ -1,6 +1,15 @@
 const goodTestUser = {
+  //this user also has the expenses table
+  // seeded with a few expenses for testing
   email: 'test_login@email.com',
   password: 'testpassword',
+};
+
+const getExpenseTestUser = goodTestUser;
+
+const getNoExpenseTestUser = {
+  email: 'noExpTest@email.com',
+  password: 'sparkle47',
 };
 
 const newExpenseTestObj = {
@@ -71,5 +80,7 @@ module.exports = {
   badAcctFromExpenseTestObj,
   badCategoryExpenseTestObj,
   badPaidToExpenseTestObj,
+  getExpenseTestUser,
+  getNoExpenseTestUser,
   checkValidation,
 };

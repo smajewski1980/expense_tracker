@@ -5,6 +5,7 @@ const { isAuth } = require('../middleware/isAuth');
 const {
   postExpenseController,
 } = require('../controllers/postExpenseController');
+const { getExpenseController } = require('../controllers/getExpenseController');
 
 router.post(
   '/',
@@ -20,5 +21,7 @@ router.post(
   body('notes').escape(),
   postExpenseController,
 );
+
+router.get('/', isAuth, getExpenseController);
 
 module.exports = router;

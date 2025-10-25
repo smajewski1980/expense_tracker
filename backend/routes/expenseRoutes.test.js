@@ -10,6 +10,8 @@ const {
   badAcctFromExpenseTestObj,
   badCategoryExpenseTestObj,
   badPaidToExpenseTestObj,
+  getExpenseTestUser,
+  getNoExpenseTestUser,
   checkValidation,
 } = require('../expenseTestResources');
 const { testLoginUser } = require('../userTestResources');
@@ -39,6 +41,29 @@ describe('check error handling for db calls', () => {
       .set('Cookie', cookie)
       .send(newExpenseTestObj)
       .expect(500);
+  });
+});
+
+describe('GET /expense', () => {
+  it('returns a 401 if not logged in', async () => {
+    await request(app).get('/expense').expect(401);
+  });
+
+  it('returns 200 with a message if the user has no expenses entered', async () => {
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(getNoExpenseTestUser).expect(200);
+
+    const res = await agent.get('/expense').expect(200);
+    expect(res.body).toBe('Start by entering an expense.');
+  });
+
+  it('returns 200 and a list of expenses for the current user', async () => {
+    const agent = request.agent(app);
+    await agent.post('/user/login').send(getExpenseTestUser).expect(200);
+
+    const res = await agent.get('/expense').expect(200);
+    expect(res.body.length).toBe(2);
+    expect(res.body[0].user_email).toBe(getExpenseTestUser.email);
   });
 });
 

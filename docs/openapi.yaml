@@ -22,9 +22,9 @@ tags:
   - name: User Routes
     description: ''
 paths:
-  /expenses:
-    summary: Returns Expenses
-    description: Returns a chronologically ordered list of expenses
+  /expense:
+    summary: handles crud operations on an expense
+    description: This will be the path to handle PUT, POST and DELETE requests.
     get:
       summary: Gets all expenses for a user.
       description: >-
@@ -88,10 +88,7 @@ paths:
                   value: 
                     msg: Something went wrong, please try again.                    
       tags:
-        - Expense Routes
-  /expense:
-    summary: handles crud operations on an expense
-    description: This will be the path to handle PUT, POST and DELETE requests.
+        - Expense Routes    
     post:
       summary: Create an expense.
       description: Takes an expense from the client and sends to the database
