@@ -164,9 +164,14 @@ describe('GET /user/logout', () => {
 
 describe('PUT /user', () => {
   describe('invalid form data', () => {
-    it('returns a 400 if given an invalid email', async () => {
-      const agent = request.agent(app);
+    let agent;
+
+    beforeEach(async () => {
+      agent = request.agent(app);
       await agent.post('/user/login').send(testLoginUser).expect(200);
+    });
+
+    it('returns a 400 if given an invalid email', async () => {
       const res = await agent
         .put('/user')
         .send(badEmailUser)
@@ -175,8 +180,6 @@ describe('PUT /user', () => {
     });
 
     it('returns a 400 if given an invalid password', async () => {
-      const agent = request.agent(app);
-      await agent.post('/user/login').send(testLoginUser).expect(200);
       const res = await agent
         .put('/user')
         .send(badPwUser)
@@ -185,8 +188,6 @@ describe('PUT /user', () => {
     });
 
     it('returns a 400 if given an invalid password conf', async () => {
-      const agent = request.agent(app);
-      await agent.post('/user/login').send(testLoginUser).expect(200);
       const res = await agent
         .put('/user')
         .send(badPwConfUser)
