@@ -66,6 +66,11 @@ const badPaidToExpenseTestObj = {
   notes: 'Bought unicorn feed',
 };
 
+const testUserForDelete = {
+  email: 'unicorn_wizard@email.com',
+  password: 'sparkle47',
+};
+
 function checkValidation(res) {
   expect(res.status).toBe(400);
   expect(res.body).toBeInstanceOf(Array);
@@ -82,5 +87,6 @@ module.exports = {
   badPaidToExpenseTestObj,
   getExpenseTestUser,
   getNoExpenseTestUser,
+  testUserForDelete,
   checkValidation,
 };

@@ -12,6 +12,7 @@ const {
   badPaidToExpenseTestObj,
   getExpenseTestUser,
   getNoExpenseTestUser,
+  testUserForDelete,
   checkValidation,
 } = require('../expenseTestResources');
 const { testLoginUser } = require('../userTestResources');
@@ -65,6 +66,23 @@ describe('expense routes', () => {
         .get('/expense')
         .set('Cookie', cookie)
         .send(newExpenseTestObj)
+        .expect(500);
+    });
+
+    it('DELETE /expense returns 500 if theres a prob connecting to db', async () => {
+      const res = await request(app)
+        .post('/user/login')
+        .send(testLoginUser)
+        .expect(200);
+      const cookie = res.headers['set-cookie'];
+
+      poolSpy.mockImplementation(() => {
+        throw new Error('PostgreSQL database error: Connection refused');
+      });
+
+      await request(app)
+        .delete('/expense/9999')
+        .set('Cookie', cookie)
         .expect(500);
     });
   });
@@ -168,6 +186,33 @@ describe('expense routes', () => {
       );
       // test cleanup was ok
       expect(cleanupRes.rowCount).toBe(0);
+    });
+  });
+
+  describe('DELETE /expense/:id', () => {
+    it('returns 401 and a msg if user is not logged in', async () => {
+      await request(app).delete('/expense/99999').expect(401);
+    });
+
+    it('returns 404 and a msg if given a bad expense id', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testUserForDelete).expect(200);
+      await agent.delete('/expense/99999').expect(404);
+    });
+
+    it('deletes an expense and returns 204 if given a valid expense id', async () => {
+      // login
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(testUserForDelete).expect(200);
+      // create an expense to delete
+      const postRes = await agent
+        .post('/expense')
+        .send(newExpenseTestObj)
+        .expect(201);
+      expect(Number.isInteger(postRes.body)).toBe(true);
+      const expenseId = await postRes.body;
+      // delete the newly created expense
+      await agent.delete(`/expense/${expenseId}`).expect(204);
     });
   });
 });

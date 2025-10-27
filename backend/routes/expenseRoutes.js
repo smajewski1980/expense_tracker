@@ -6,6 +6,9 @@ const {
   postExpenseController,
 } = require('../controllers/postExpenseController');
 const { getExpenseController } = require('../controllers/getExpenseController');
+const {
+  deleteExpenseController,
+} = require('../controllers/deleteExpenseController');
 
 router.post(
   '/',
@@ -23,5 +26,7 @@ router.post(
 );
 
 router.get('/', isAuth, getExpenseController);
+
+router.delete('/:id', isAuth, deleteExpenseController);
 
 module.exports = router;
