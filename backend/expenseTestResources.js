@@ -21,8 +21,28 @@ const newExpenseTestObj = {
   notes: 'Bought unicorn feed',
 };
 
+// expense id 28
+const putOriginalExpense = {
+  date: '04-05-06',
+  expense_amount: 50,
+  account_paid_from: 'checking',
+  category: 1,
+  paid_to: 'Unicorn Emporium',
+  notes: 'this is a test entry',
+};
+
+const putUpdatedExpense = {
+  date: '04-05-06',
+  expense_amount: 50,
+  account_paid_from: 'checking',
+  category: 1,
+  paid_to: 'Unicorn Emporium',
+  notes: 'this is a test entry',
+};
+// -------------------
+
 const badDateExpenseTestObj = {
-  date: null,
+  date: '11111',
   expense_amount: 474,
   account_paid_from: 'checking',
   category: 2,
@@ -88,5 +108,7 @@ module.exports = {
   getExpenseTestUser,
   getNoExpenseTestUser,
   testUserForDelete,
+  putOriginalExpense,
+  putUpdatedExpense,
   checkValidation,
 };

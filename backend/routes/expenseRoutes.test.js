@@ -13,6 +13,8 @@ const {
   getExpenseTestUser,
   getNoExpenseTestUser,
   testUserForDelete,
+  putOriginalExpense,
+  putUpdatedExpense,
   checkValidation,
 } = require('../expenseTestResources');
 const { testLoginUser } = require('../userTestResources');
@@ -186,6 +188,97 @@ describe('expense routes', () => {
       );
       // test cleanup was ok
       expect(cleanupRes.rowCount).toBe(0);
+    });
+  });
+
+  describe('PUT /expense/:id', () => {
+    it('returns a 401 if there is no user logged in', async () => {
+      await request(app).put('/expense/99999').expect(401);
+    });
+
+    it('returns a 404 if the expense id param is invalid', async () => {
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(goodTestUser).expect(200);
+
+      const res = await agent
+        .put('/expense/99999')
+        .send(putUpdatedExpense)
+        .expect(404);
+      expect(res.body).toBe('We could not find an expense with that id.');
+    });
+
+    describe('errors when given invalid data', () => {
+      let agent;
+
+      beforeAll(async () => {
+        agent = request.agent(app);
+        await agent.post('/user/login').send(goodTestUser).expect(200);
+      });
+
+      it('returns 400 when given invalid date', async () => {
+        const res = await agent
+          .put('/expense/28')
+          .set('Accept', 'application/json')
+          .send(badDateExpenseTestObj);
+        checkValidation(res);
+      });
+
+      it('returns 400 when given invalid expense amount', async () => {
+        const res = await agent
+          .put('/expense/28')
+          .set('Accept', 'application/json')
+          .send(badAmountExpenseTestObj);
+        checkValidation(res);
+      });
+
+      it('returns 400 when given invalid account paid from', async () => {
+        const res = await agent
+          .put('/expense/28')
+          .set('Accept', 'application/json')
+          .send(badAcctFromExpenseTestObj);
+        checkValidation(res);
+      });
+
+      it('returns 400 when given invalid category', async () => {
+        const res = await agent
+          .put('/expense/28')
+          .set('Accept', 'application/json')
+          .send(badCategoryExpenseTestObj);
+        checkValidation(res);
+      });
+
+      it('returns 400 when given invalid paid to', async () => {
+        const res = await agent
+          .put('/expense/28')
+          .set('Accept', 'application/json')
+          .send(badPaidToExpenseTestObj);
+        checkValidation(res);
+      });
+    });
+
+    it('returns 200 and updates expense data', async () => {
+      // login
+      const agent = request.agent(app);
+      await agent.post('/user/login').send(goodTestUser).expect(200);
+      // update expense id 28
+      const res = await agent
+        .put('/expense/28')
+        .send(putUpdatedExpense)
+        .expect(200);
+      expect(res.body).toBe('expense has been updated');
+      // check it was updated
+      const result = await pool.query(
+        'SELECT expense_amount FROM expenses WHERE expense_id = 28',
+      );
+      expect(Number(result.rows[0].expense_amount)).toBe(
+        putUpdatedExpense.expense_amount,
+      );
+      // cleanup
+      const cleanupRes = await agent
+        .put('/expense/28')
+        .send(putOriginalExpense)
+        .expect(200);
+      expect(cleanupRes.body).toBe('expense has been updated');
     });
   });
 
