@@ -71,7 +71,7 @@ describe('expense routes', () => {
         .expect(500);
     });
 
-    it('DELETE /expense returns 500 if theres a prob connecting to db', async () => {
+    it('DELETE /expense/:id returns 500 if theres a prob connecting to db', async () => {
       const res = await request(app)
         .post('/user/login')
         .send(testLoginUser)
@@ -85,6 +85,24 @@ describe('expense routes', () => {
       await request(app)
         .delete('/expense/9999')
         .set('Cookie', cookie)
+        .expect(500);
+    });
+
+    it('PUT /expense/:id returns 500 if theres a prob connecting to db', async () => {
+      const res = await request(app)
+        .post('/user/login')
+        .send(testLoginUser)
+        .expect(200);
+      const cookie = res.headers['set-cookie'];
+
+      poolSpy.mockImplementation(() => {
+        throw new Error('PostgreSQL database error: Connection refused');
+      });
+
+      await request(app)
+        .put('/expense/28')
+        .set('Cookie', cookie)
+        .send(newExpenseTestObj)
         .expect(500);
     });
   });
