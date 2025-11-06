@@ -3,3 +3,4 @@ swagger-editor/
 .env
 /backend/coverage
 frontend_notes.txt
+/dev_stuff
