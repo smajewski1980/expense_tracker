@@ -1,9 +1,15 @@
-import React from "react";
+import Button from "../button/Button";
 
-function EditExpense() {
+function EditExpense({ id }) {
+  function handleEditExpenseBtn() {
+    console.log(`expense id ${id} will be edited`);
+  }
   return (
     <div>
-      <button>Edit</button>
+      <Button
+        text="Edit"
+        cb={handleEditExpenseBtn}
+      />
     </div>
   );
 }

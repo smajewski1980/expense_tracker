@@ -1,9 +1,16 @@
-import React from "react";
+import Button from "../button/Button";
 
 function Logout() {
+  function handleLogout() {
+    console.log("logout btn clicked");
+  }
+
   return (
     <div>
-      <button>Logout</button>
+      <Button
+        text="Logout"
+        cb={handleLogout}
+      />
     </div>
   );
 }

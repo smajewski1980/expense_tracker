@@ -1,10 +1,17 @@
-import React from "react";
+import Button from "../button/Button";
 
 function EditUserForm() {
+  function handleDeleteUserBtn() {
+    console.log("delete user btn clicked");
+  }
+
   return (
     <div>
       <p>EditUserForm</p>
-      <button>Delete User</button>
+      <Button
+        text="Delete User"
+        cb={handleDeleteUserBtn}
+      />
     </div>
   );
 }

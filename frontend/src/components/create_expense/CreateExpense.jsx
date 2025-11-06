@@ -1,9 +1,16 @@
-import React from "react";
+import Button from "../button/Button";
 
 function CreateExpense() {
+  function handleCreateExpBtn() {
+    console.log("create expense btn clicked");
+  }
+
   return (
     <div>
-      <button>CreateExpense</button>
+      <Button
+        text="Create Expense"
+        cb={handleCreateExpBtn}
+      />
     </div>
   );
 }
