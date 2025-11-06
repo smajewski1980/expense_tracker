@@ -4,7 +4,7 @@ import DeleteExpense from "../delete_expense/DeleteExpense";
 function Expense(props) {
   const { id, description } = props;
   return (
-    <div data-expId={id}>
+    <div data-exp-id={id}>
       {description}
       <EditExpense id={id} /> <DeleteExpense id={id} />
     </div>
