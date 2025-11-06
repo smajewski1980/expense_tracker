@@ -2,3 +2,4 @@ swagger-editor/
 /backend/node_modules
 .env
 /backend/coverage
+frontend_notes.txt

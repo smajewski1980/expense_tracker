@@ -1,8 +1,14 @@
-import { useState } from "react";
 import "./App.css";
+import Header from "./components/header/Header.jsx";
+import Expenses from "./components/expenses/Expenses.jsx";
 
 function App() {
-  return <h1>Hello world</h1>;
+  return (
+    <>
+      <Header />
+      <Expenses />
+    </>
+  );
 }
 
 export default App;
