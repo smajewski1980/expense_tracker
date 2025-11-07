@@ -35,10 +35,8 @@ function CreateUserForm() {
     e.preventDefault();
 
     if (password !== passwordConf) {
-      // maybe leave this?
       alert("Whoops, your passwords don't Match");
     } else {
-      // here will go the fetch to backend
       try {
         const response = await fetch("http://127.0.0.1:4747/user", options);
         const newUserId = await response.json();

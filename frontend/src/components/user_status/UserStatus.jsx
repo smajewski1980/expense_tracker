@@ -1,9 +1,17 @@
+import { useState } from "react";
 import Button from "../button/Button";
+import LoginForm from "../login_form/LoginForm";
 
 // once user is logged in this will show user logged in as...
 function UserStatus() {
+  const [login, setLogin] = useState(false);
+
   function handleLoginBtn() {
-    console.log("login btn clicked");
+    setLogin(true);
+  }
+
+  if (login) {
+    return <LoginForm setLogin={setLogin} />;
   }
 
   return (
