@@ -5,6 +5,21 @@ function CreateUserForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
+  const [error, setError] = useState(null);
+
+  const newUser = {
+    email: email,
+    password: password,
+    passwordConf: passwordConf,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(newUser),
+  };
 
   function handleEmail(e) {
     setEmail(e.target.value);
@@ -16,7 +31,7 @@ function CreateUserForm() {
     setPasswordConf(e.target.value);
   }
 
-  function handleCreateUserForm(e) {
+  async function handleCreateUserForm(e) {
     e.preventDefault();
 
     if (password !== passwordConf) {
@@ -24,11 +39,21 @@ function CreateUserForm() {
       alert("Whoops, your passwords don't Match");
     } else {
       // here will go the fetch to backend
-      console.log(email);
-      console.log(password);
-      console.log(passwordConf);
+      try {
+        const response = await fetch("http://127.0.0.1:4747/user", options);
+        const newUserId = await response.json();
+        alert(`a new user was created with an id of ${newUserId}`);
+        setEmail("");
+        setPassword("");
+        setPasswordConf("");
+        return;
+      } catch (error) {
+        setError(error);
+      }
     }
   }
+
+  if (error) alert(error);
 
   return (
     <form
