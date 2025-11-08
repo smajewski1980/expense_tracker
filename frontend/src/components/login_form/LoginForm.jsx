@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LoginForm({ setLogin }) {
+function LoginForm({ setLogin, setCurrentUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,10 +23,13 @@ function LoginForm({ setLogin }) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:4747/user/login", options);
+      const response = await fetch("/user/login", options);
       if (response.ok) {
         setLogin(false);
       }
+      const currentUserRes = await fetch("/user");
+      const currentUser = await currentUserRes.json();
+      setCurrentUser(await currentUser.user_email);
     } catch (error) {
       alert(error);
     }

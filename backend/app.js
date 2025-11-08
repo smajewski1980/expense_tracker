@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const cors = require("cors");
 
+app.use(cors());
+
 app.use(
   session({
     secret: "unicorn_princess",
@@ -14,7 +16,6 @@ app.use(
     cookie: { maxAge: 5e6 },
   }),
 );
-app.use(cors());
 app.use(bodyParser.json());
 app.use("/user", userRoutes);
 app.use("/expense", expenseRoutes);
