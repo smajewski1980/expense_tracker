@@ -38,7 +38,7 @@ function CreateUserForm() {
       alert("Whoops, your passwords don't Match");
     } else {
       try {
-        const response = await fetch("http://127.0.0.1:4747/user", options);
+        const response = await fetch("/user", options);
         const newUserId = await response.json();
         alert(`a new user was created with an id of ${newUserId}`);
         setEmail("");
