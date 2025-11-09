@@ -1,8 +1,16 @@
 import Button from "../button/Button";
 
-function Logout() {
-  function handleLogout() {
-    console.log("logout btn clicked");
+function Logout({ setLogin, setCurrentUser }) {
+  async function handleLogout() {
+    try {
+      const response = await fetch("/user/logout");
+      if (response.ok) {
+        setLogin(true);
+        setCurrentUser("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

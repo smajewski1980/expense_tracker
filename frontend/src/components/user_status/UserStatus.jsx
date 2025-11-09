@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "../button/Button";
 import LoginForm from "../login_form/LoginForm";
+import Logout from "../logout/Logout";
 
 // once user is logged in this will show user logged in as...
 function UserStatus() {
@@ -27,6 +28,10 @@ function UserStatus() {
         cb={handleLoginBtn}
       />
       <p>Logged in as {currentUser}</p>
+      <Logout
+        setLogin={setLogin}
+        setCurrentUser={setCurrentUser}
+      />
     </div>
   );
 }
