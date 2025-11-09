@@ -5,7 +5,7 @@ function Logout({ setLogin, setCurrentUser }) {
     try {
       const response = await fetch("/user/logout");
       if (response.ok) {
-        setLogin(true);
+        setLogin(false);
         setCurrentUser("");
       }
     } catch (error) {

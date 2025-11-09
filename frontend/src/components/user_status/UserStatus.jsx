@@ -29,15 +29,19 @@ function UserStatus() {
     <div>
       {!login && !currentUser && (
         <Button
-          text="Login"
+          text="Login/Create User"
           cb={handleLoginBtn}
         />
       )}
-      <p>Logged in as {currentUser}</p>
-      <Logout
-        setLogin={setLogin}
-        setCurrentUser={setCurrentUser}
-      />
+      {!login && currentUser && (
+        <>
+          <p>Logged in as {currentUser}</p>
+          <Logout
+            setLogin={setLogin}
+            setCurrentUser={setCurrentUser}
+          />
+        </>
+      )}
     </div>
   );
 }
