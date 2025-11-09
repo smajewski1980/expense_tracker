@@ -1,9 +1,12 @@
 import CreateUserForm from "../create_user_form/CreateUserForm";
 import Button from "../button/Button";
+import { useState } from "react";
 
 function CreateUserButton() {
+  const [createUser, setCreateUser] = useState(false);
+
   function handleCreateUser() {
-    console.log("create user btn clicked");
+    setCreateUser((prev) => !prev);
   }
 
   return (
@@ -12,7 +15,7 @@ function CreateUserButton() {
         text="Create User"
         cb={handleCreateUser}
       />
-      <CreateUserForm />
+      {createUser && <CreateUserForm />}
     </div>
   );
 }
