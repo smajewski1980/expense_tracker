@@ -1,14 +1,17 @@
 import Logo from "../logo/Logo";
 import UserStatus from "../user_status/UserStatus";
-import EditUserButton from "../edit_user_btn/EditUserButton";
+import EditUser from "../edit_user_btn/EditUser";
 import Filter from "../filter/Filter";
 
-function Header() {
+function Header({ currentUser, setCurrentUser }) {
   return (
     <>
       <Logo />
-      <UserStatus />
-      <EditUserButton />
+      <UserStatus
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+      />
+      <EditUser currentUser={currentUser} />
       <Filter />
     </>
   );

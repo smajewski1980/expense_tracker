@@ -1,12 +1,17 @@
 import "./App.css";
-import Header from "./components/header/Header.jsx";
+import Header from "./components/header/header.jsx";
 import Expenses from "./components/expenses/Expenses.jsx";
+import { useState } from "react";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState("");
   return (
     <>
-      <Header />
-      <Expenses />
+      <Header
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+      />
+      <Expenses currentUser={currentUser} />
     </>
   );
 }
