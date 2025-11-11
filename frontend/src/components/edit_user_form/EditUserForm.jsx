@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../button/Button";
 import styles from "./EditUserForm.module.css";
 
-function EditUserForm({ currentUser }) {
+function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [newPwConf, setNewPwConf] = useState("");
@@ -20,6 +20,8 @@ function EditUserForm({ currentUser }) {
         const response = await fetch("/user", { method: "DELETE" });
         if (response.status === 204) {
           alert(`${userToDel}'s account just went poof!`);
+          setCurrentUser("");
+          setShowEditUserForm(false);
         }
       } catch (error) {
         console.log(error);

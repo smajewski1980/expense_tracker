@@ -19,6 +19,7 @@ function EditUser({ currentUser, setCurrentUser }) {
         <EditUserForm
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
+          setShowEditUserForm={setShowEditUserForm}
         />
       )}
     </div>
