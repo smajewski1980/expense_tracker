@@ -1,7 +1,15 @@
 import React from "react";
+import styles from "./Button.module.css";
 
-function Button({ text, cb }) {
-  return <button onClick={cb}>{text}</button>;
+function Button({ text, cb, type }) {
+  return (
+    <button
+      className={type === "delete" ? styles.btnDelete : undefined}
+      onClick={cb}
+    >
+      {text}
+    </button>
+  );
 }
 
 export default Button;

@@ -7,9 +7,27 @@ function EditUserForm({ currentUser }) {
   const [newPw, setNewPw] = useState("");
   const [newPwConf, setNewPwConf] = useState("");
 
-  function handleDeleteUserBtn(e) {
+  async function handleDeleteUserBtn(e) {
     e.preventDefault();
-    console.log("curr user", currentUser);
+
+    const deleteCheck = confirm(
+      `Are you sure you want to delete the account for ${currentUser}? There's no going back...`,
+    );
+
+    if (deleteCheck) {
+      const userToDel = currentUser;
+      try {
+        const response = await fetch("/user", { method: "DELETE" });
+        if (response.status === 204) {
+          alert(`${userToDel}'s account just went poof!`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      return;
+    }
+
+    return;
   }
 
   function handleEditSubmit(e) {
@@ -33,6 +51,7 @@ function EditUserForm({ currentUser }) {
     <form onSubmit={handleEditSubmit}>
       <Button
         text="Delete User"
+        type="delete"
         cb={handleDeleteUserBtn}
       />
       <p>Edit User</p>
@@ -54,6 +73,7 @@ function EditUserForm({ currentUser }) {
           id="old-pw"
           value={oldPw}
           onChange={handleEditOldPw}
+          autoComplete="off"
         />
       </div>
       <div className="input-wrapper">
@@ -64,6 +84,7 @@ function EditUserForm({ currentUser }) {
           id="new-pw"
           value={newPw}
           onChange={handleEditNewPw}
+          autoComplete="off"
         />
       </div>
       <div className="input-wrapper">
@@ -74,6 +95,7 @@ function EditUserForm({ currentUser }) {
           id="new-pw-conf"
           value={newPwConf}
           onChange={handleEditNewPwConf}
+          autoComplete="off"
         />
       </div>
       <Button text="submit" />

@@ -11,7 +11,10 @@ function Header({ currentUser, setCurrentUser }) {
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
       />
-      <EditUser currentUser={currentUser} />
+      <EditUser
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+      />
       <Filter />
     </>
   );
