@@ -11,7 +11,7 @@ function App() {
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
       />
-      <Expenses currentUser={currentUser} />
+      {currentUser && <Expenses currentUser={currentUser} />}
     </>
   );
 }

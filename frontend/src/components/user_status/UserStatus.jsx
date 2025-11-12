@@ -5,7 +5,7 @@ import Logout from "../logout/Logout";
 import CreateUserButton from "../create_user_btn/CreateUserButton";
 
 // once user is logged in this will show user logged in as...
-function UserStatus({ currentUser, setCurrentUser }) {
+function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
   const [login, setLogin] = useState(false);
   const [createUser, setCreateUser] = useState(false);
 
@@ -45,6 +45,7 @@ function UserStatus({ currentUser, setCurrentUser }) {
           <Logout
             setLogin={setLogin}
             setCurrentUser={setCurrentUser}
+            setShowEditUserForm={setShowEditUserForm}
           />
         </>
       )}

@@ -56,7 +56,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
         type="delete"
         cb={handleDeleteUserBtn}
       />
-      <p>Edit User</p>
+      <p>Edit User Form</p>
       <div className="input-wrapper">
         <label htmlFor="edit-email">email</label>
         <input
