@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../button/Button";
 
-function CreateUserForm() {
+function CreateUserForm({ setCreateUser, setLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
@@ -44,6 +44,8 @@ function CreateUserForm() {
         setEmail("");
         setPassword("");
         setPasswordConf("");
+        setCreateUser(false);
+        setLogin(false);
         return;
       } catch (error) {
         setError(error);
