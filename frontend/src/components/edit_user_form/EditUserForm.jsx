@@ -3,7 +3,7 @@ import Button from "../button/Button";
 import styles from "./EditUserForm.module.css";
 
 function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
-  const [oldPw, setOldPw] = useState("");
+  // const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [newPwConf, setNewPwConf] = useState("");
 
@@ -32,9 +32,33 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
     return;
   }
 
-  function handleEditSubmit(e) {
+  async function handleEditSubmit(e) {
     e.preventDefault();
-    console.log("we be submittin");
+    const updated = {
+      email: currentUser,
+      password: newPw,
+      passwordConf: newPwConf,
+    };
+
+    const options = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updated),
+    };
+
+    try {
+      const response = await fetch("/user", options);
+      if (response.ok) {
+        alert("password has been updated");
+        setNewPw("");
+        setNewPwConf("");
+        setShowEditUserForm(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function handleEditOldPw(e) {
@@ -67,7 +91,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
           disabled={true}
         />
       </div>
-      <div className="input-wrapper">
+      {/* <div className="input-wrapper">
         <label htmlFor="old-pw">old password</label>
         <input
           type="password"
@@ -77,7 +101,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
           onChange={handleEditOldPw}
           autoComplete="off"
         />
-      </div>
+      </div> */}
       <div className="input-wrapper">
         <label htmlFor="new-pw">new password</label>
         <input
