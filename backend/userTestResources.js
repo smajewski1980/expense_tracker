@@ -33,6 +33,12 @@ const testLoginUser = {
   password: 'testpassword',
 };
 
+const testLoginUserUpdate = {
+  oldPassword: 'testpasswords',
+  password: 'testpasswordss',
+  passwordConf: 'testpasswordss',
+};
+
 const testBadLoginPwUser = {
   email: 'test_login@email.com',
   password: 'testpasswor',
@@ -50,9 +56,21 @@ const resetUpdatedUser = {
 };
 
 const updatedUser = {
+  oldPassword: 'sparkle47',
+  password: 'sparkle74',
+  passwordConf: 'sparkle74',
+};
+
+const updatedUserLogin = {
   email: 'unicorn_wizard@email.com',
   password: 'sparkle74',
   passwordConf: 'sparkle74',
+};
+
+const cleanupUpdatedUser = {
+  oldPassword: 'sparkle74',
+  password: 'sparkle47',
+  passwordConf: 'sparkle47',
 };
 
 const userToDelete = {
@@ -80,4 +98,7 @@ module.exports = {
   resetUpdatedUser,
   updatedUser,
   userToDelete,
+  cleanupUpdatedUser,
+  updatedUserLogin,
+  testLoginUserUpdate,
 };

@@ -35,6 +35,8 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   async function handleEditSubmit(e) {
     e.preventDefault();
     const updated = {
+      // user is logged in grab the email on the backend
+      // oldPassword: oldPw,
       email: currentUser,
       password: newPw,
       passwordConf: newPwConf,

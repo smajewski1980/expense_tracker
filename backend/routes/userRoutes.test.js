@@ -15,6 +15,9 @@ const {
   updatedUser,
   resetUpdatedUser,
   userToDelete,
+  cleanupUpdatedUser,
+  updatedUserLogin,
+  testLoginUserUpdate,
 } = require('../userTestResources');
 
 describe('user routes', () => {
@@ -179,10 +182,10 @@ describe('user routes', () => {
         await agent.post('/user/login').send(testLoginUser).expect(200);
       });
 
-      it('returns a 400 if given an invalid email', async () => {
+      it('returns a 400 if given an invalid old password', async () => {
         const res = await agent
           .put('/user')
-          .send(badEmailUser)
+          .send(testLoginUserUpdate)
           .set('Accept', 'application/json');
         checkValidation(res);
       });
@@ -215,20 +218,14 @@ describe('user routes', () => {
         // logout the user
         await agent.get('/user/logout').expect(200);
         // login the updated user
-        await agent.post('/user/login').send(updatedUser).expect(200);
+        await agent.post('/user/login').send(updatedUserLogin).expect(200);
         // **cleanup**
         // change the user info back
         const cleanupRes = await agent
           .put('/user')
-          .send(resetUpdatedUser)
+          .send(cleanupUpdatedUser)
           .expect(200);
         expect(cleanupRes.body).toBe('User info has been updated.');
-      });
-
-      it('returns a 500 if provided email is taken', async () => {
-        const agent = request.agent(app);
-        await agent.post('/user/login').send(resetUpdatedUser).expect(200);
-        await agent.put('/user').send(duplicateEmailUser).expect(500);
       });
 
       it('returns 401 if there is not a user logged in', async () => {

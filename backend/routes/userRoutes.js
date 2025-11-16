@@ -39,7 +39,7 @@ router.get('/logout', isAuth, getUserLogoutController);
 router.put(
   '/',
   isAuth,
-  body('email').notEmpty().isEmail().escape(),
+  body('oldPassword').notEmpty().isLength({ min: 5, max: 20 }).escape(),
   body('password').notEmpty().isLength({ min: 5, max: 20 }).escape(),
   body('passwordConf').notEmpty().isLength({ min: 5, max: 20 }).escape(),
   putUserController,

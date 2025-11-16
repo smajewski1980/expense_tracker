@@ -507,9 +507,9 @@ components:
     Create_user_credentials_update:
       type: object
       properties:
-        email:
+        oldPassword:
           type: string
-          example: unicorn_princess@email.com
+          example: sparkle47
         password:
           type: string
           example: sparkle74
