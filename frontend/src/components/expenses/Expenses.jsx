@@ -7,6 +7,7 @@ function Expenses() {
   const [filterCategory, setFilterCategory] = useState("");
 
   useEffect(() => {
+    // here will go a function that updates the filtered results
     console.log("filter cat", filterCategory);
   }, [filterCategory]);
 
@@ -14,14 +15,14 @@ function Expenses() {
     <div>
       <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense />
-      <Expense
+      {/* <Expense
         id="47"
         description="Expense 1"
       />
       <Expense
         id="474"
         description="Expense 2"
-      />
+      /> */}
     </div>
   );
 }

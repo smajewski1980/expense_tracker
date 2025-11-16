@@ -1,10 +1,6 @@
 import Button from "../button/Button";
 
 function Filter({ setFilterCategory }) {
-  // function handleFilterBtn(e) {
-  //   setFilterCategory(e.target.value);
-  // }
-
   function handleSelectCategory(e) {
     setFilterCategory(e.target.value);
   }
@@ -24,10 +20,6 @@ function Filter({ setFilterCategory }) {
         <option value="utilities">Utilities</option>
         <option value="entertainment">Entertainment</option>
       </select>
-      {/* <Button
-        text="Filter Expenses"
-        cb={handleFilterBtn}
-      /> */}
     </div>
   );
 }
