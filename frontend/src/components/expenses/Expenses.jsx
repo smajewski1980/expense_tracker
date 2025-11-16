@@ -8,7 +8,7 @@ function Expenses() {
 
   useEffect(() => {
     // here will go a function that updates the filtered results
-    console.log("filter cat", filterCategory);
+    // console.log("filter cat", filterCategory);
   }, [filterCategory]);
 
   return (
