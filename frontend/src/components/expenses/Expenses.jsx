@@ -1,9 +1,18 @@
 import Expense from "../expense/Expense";
 import CreateExpense from "../create_expense/CreateExpense";
+import Filter from "../filter/Filter";
+import { useEffect, useState } from "react";
 
 function Expenses() {
+  const [filterCategory, setFilterCategory] = useState("");
+
+  useEffect(() => {
+    console.log("filter cat", filterCategory);
+  }, [filterCategory]);
+
   return (
     <div>
+      <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense />
       <Expense
         id="47"

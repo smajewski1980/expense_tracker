@@ -1,18 +1,33 @@
 import Button from "../button/Button";
 
-function Filter() {
-  function handleFilterBtn() {
-    console.log("filter btn clicked");
+function Filter({ setFilterCategory }) {
+  // function handleFilterBtn(e) {
+  //   setFilterCategory(e.target.value);
+  // }
+
+  function handleSelectCategory(e) {
+    setFilterCategory(e.target.value);
   }
 
   return (
     <div>
-      <p>Filter</p>
-      <p>&lt; list of categories &gt;</p>
-      <Button
-        text="Filter"
+      <p>Filter by category</p>
+      <select
+        name="categories"
+        id="category-select"
+        onChange={handleSelectCategory}
+      >
+        <option value=""></option>
+        <option value="housing">Housing</option>
+        <option value="transportation">Transportation</option>
+        <option value="food">Food & Beverage</option>
+        <option value="utilities">Utilities</option>
+        <option value="entertainment">Entertainment</option>
+      </select>
+      {/* <Button
+        text="Filter Expenses"
         cb={handleFilterBtn}
-      />
+      /> */}
     </div>
   );
 }
