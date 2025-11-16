@@ -16,7 +16,7 @@ function EditUser({
     <div>
       {!showEditUserForm && (
         <Button
-          text="Edit User"
+          text="Account Options"
           cb={handleEditUserBtn}
         />
       )}

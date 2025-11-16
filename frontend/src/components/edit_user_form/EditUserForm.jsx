@@ -3,7 +3,7 @@ import Button from "../button/Button";
 import styles from "./EditUserForm.module.css";
 
 function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
-  // const [oldPw, setOldPw] = useState("");
+  const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [newPwConf, setNewPwConf] = useState("");
 
@@ -16,6 +16,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
 
     if (deleteCheck) {
       const userToDel = currentUser;
+
       try {
         const response = await fetch("/user", { method: "DELETE" });
         if (response.status === 204) {
@@ -24,7 +25,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
           setShowEditUserForm(false);
         }
       } catch (error) {
-        console.log(error);
+        return new Error(error);
       }
       return;
     }
@@ -35,9 +36,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   async function handleEditSubmit(e) {
     e.preventDefault();
     const updated = {
-      // user is logged in grab the email on the backend
-      // oldPassword: oldPw,
-      email: currentUser,
+      oldPassword: oldPw,
       password: newPw,
       passwordConf: newPwConf,
     };
@@ -59,7 +58,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
         setShowEditUserForm(false);
       }
     } catch (error) {
-      console.log(error);
+      return new Error(error);
     }
   }
 
@@ -82,18 +81,8 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
         type="delete"
         cb={handleDeleteUserBtn}
       />
-      <p>Edit User Form</p>
+      <p>Change Password</p>
       <div className="input-wrapper">
-        <label htmlFor="edit-email">email</label>
-        <input
-          type="email"
-          name="editEmail"
-          id="edit-email"
-          value={currentUser}
-          disabled={true}
-        />
-      </div>
-      {/* <div className="input-wrapper">
         <label htmlFor="old-pw">old password</label>
         <input
           type="password"
@@ -103,7 +92,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
           onChange={handleEditOldPw}
           autoComplete="off"
         />
-      </div> */}
+      </div>
       <div className="input-wrapper">
         <label htmlFor="new-pw">new password</label>
         <input
