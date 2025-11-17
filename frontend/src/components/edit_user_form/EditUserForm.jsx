@@ -33,6 +33,15 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
     return;
   }
 
+  function handleCancelEditUser(e) {
+    console.log("getting here");
+    e.preventDefault();
+    setOldPw("");
+    setNewPw("");
+    setNewPwConf("");
+    setShowEditUserForm(false);
+  }
+
   async function handleEditSubmit(e) {
     e.preventDefault();
     const updated = {
@@ -77,45 +86,49 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   return (
     <form onSubmit={handleEditSubmit}>
       <Button
-        text="Delete User"
-        type="delete"
+        text='Delete User'
+        type='delete'
         cb={handleDeleteUserBtn}
       />
       <p>Change Password</p>
-      <div className="input-wrapper">
-        <label htmlFor="old-pw">old password</label>
+      <div className='input-wrapper'>
+        <label htmlFor='old-pw'>old password</label>
         <input
-          type="password"
-          name="oldPw"
-          id="old-pw"
+          type='password'
+          name='oldPw'
+          id='old-pw'
           value={oldPw}
           onChange={handleEditOldPw}
-          autoComplete="off"
+          autoComplete='off'
         />
       </div>
-      <div className="input-wrapper">
-        <label htmlFor="new-pw">new password</label>
+      <div className='input-wrapper'>
+        <label htmlFor='new-pw'>new password</label>
         <input
-          type="password"
-          name="newPw"
-          id="new-pw"
+          type='password'
+          name='newPw'
+          id='new-pw'
           value={newPw}
           onChange={handleEditNewPw}
-          autoComplete="off"
+          autoComplete='off'
         />
       </div>
-      <div className="input-wrapper">
-        <label htmlFor="new-pw-conf">confirm new password</label>
+      <div className='input-wrapper'>
+        <label htmlFor='new-pw-conf'>confirm new password</label>
         <input
-          type="password"
-          name="newPwConf"
-          id="new-pw-conf"
+          type='password'
+          name='newPwConf'
+          id='new-pw-conf'
           value={newPwConf}
           onChange={handleEditNewPwConf}
-          autoComplete="off"
+          autoComplete='off'
         />
       </div>
-      <Button text="submit" />
+      <Button text='submit' />
+      <Button
+        text='cancel'
+        cb={handleCancelEditUser}
+      />
     </form>
   );
 }
