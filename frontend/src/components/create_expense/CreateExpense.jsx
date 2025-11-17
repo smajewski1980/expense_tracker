@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../button/Button";
 
-function CreateExpense() {
+function CreateExpense({ setExpTrigger }) {
   const [showCreateExpForm, setShowCreateExpForm] = useState(false);
   const [expDate, setExpDate] = useState("");
   const [expAmt, setExpAmt] = useState("");
@@ -56,6 +56,7 @@ function CreateExpense() {
       const res = await fetch("/expense", options);
       if (res.ok) alert("expense added"); // remove this later when they hot load on the screen
       clearNewExpForm();
+      setExpTrigger((prev) => !prev);
     } catch (error) {
       setError(error);
     }
@@ -111,7 +112,7 @@ function CreateExpense() {
               name='date'
               onChange={handleExpDate}
               id='expDate'
-              required='true'
+              required={true}
             />
           </div>
 
@@ -124,7 +125,7 @@ function CreateExpense() {
               id='expAmt'
               value={expAmt}
               autoComplete='off'
-              required='true'
+              required={true}
             />
           </div>
 
@@ -137,7 +138,7 @@ function CreateExpense() {
               value={acctPaidFrom}
               onChange={handleAcctPaidFrom}
               autoComplete='off'
-              required='true'
+              required={true}
             />
           </div>
 
@@ -147,7 +148,7 @@ function CreateExpense() {
               name='category'
               id='expCategory'
               onChange={handleExpCategory}
-              required='true'
+              required={true}
             >
               <option value=''></option>
               <option value='1'>Housing</option>
@@ -167,7 +168,7 @@ function CreateExpense() {
               value={expPaidTo}
               onChange={handleExpPaidTo}
               autoComplete='off'
-              required='true'
+              required={true}
             />
           </div>
 

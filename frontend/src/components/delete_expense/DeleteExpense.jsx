@@ -1,13 +1,13 @@
 import Button from "../button/Button";
 
-function DeleteExpense({ id }) {
+function DeleteExpense({ expense_id }) {
   function handleDeleteExpBtn() {
-    console.log(`expense id ${id} will be deleted`);
+    console.log(`expense id ${expense_id} will be deleted`);
   }
   return (
     <div>
       <Button
-        text="Delete"
+        text='Delete'
         cb={handleDeleteExpBtn}
       />
     </div>
