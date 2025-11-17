@@ -13,7 +13,7 @@ const getNoExpenseTestUser = {
 };
 
 const newExpenseTestObj = {
-  date: '03-04-03',
+  date: '2003-04-03 00:00:00',
   expense_amount: 474.5,
   account_paid_from: 'checking',
   category: 2,
@@ -23,7 +23,7 @@ const newExpenseTestObj = {
 
 // expense id 28
 const putOriginalExpense = {
-  date: '04-05-06',
+  date: '2004-05-06 00:00:00',
   expense_amount: 50,
   account_paid_from: 'checking',
   category: 1,
@@ -32,7 +32,7 @@ const putOriginalExpense = {
 };
 
 const putUpdatedExpense = {
-  date: '04-05-06',
+  date: '2004-05-06 00:00:00',
   expense_amount: 50,
   account_paid_from: 'checking',
   category: 1,
@@ -51,7 +51,7 @@ const badDateExpenseTestObj = {
 };
 
 const badAmountExpenseTestObj = {
-  date: '03-04-03',
+  date: '2003-04-03 00:00:00',
   expense_amount: null,
   account_paid_from: 'checking',
   category: 2,
@@ -60,7 +60,7 @@ const badAmountExpenseTestObj = {
 };
 
 const badAcctFromExpenseTestObj = {
-  date: '03-04-03',
+  date: '2003-04-03 00:00:00',
   expense_amount: 474,
   account_paid_from: null,
   category: 2,
@@ -69,7 +69,7 @@ const badAcctFromExpenseTestObj = {
 };
 
 const badCategoryExpenseTestObj = {
-  date: '03-04-03',
+  date: '2003-04-03 00:00:00',
   expense_amount: 474,
   account_paid_from: 'checking',
   category: null,
@@ -78,7 +78,7 @@ const badCategoryExpenseTestObj = {
 };
 
 const badPaidToExpenseTestObj = {
-  date: '03-04-03',
+  date: '2003-04-03 00:00:00',
   expense_amount: 474,
   account_paid_from: 'checking',
   category: 2,
