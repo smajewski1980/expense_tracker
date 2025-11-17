@@ -11,6 +11,7 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
 
   function handleLoginBtn() {
     setLogin(true);
+    setCreateUser(false);
   }
 
   if (login) {
@@ -32,9 +33,9 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
         />
       )}
 
-      {!login && !currentUser && !createUser && (
+      {!login && !currentUser && (
         <Button
-          text="Login"
+          text='Login'
           cb={handleLoginBtn}
         />
       )}

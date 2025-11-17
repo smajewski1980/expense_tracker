@@ -31,6 +31,19 @@ function CreateUserForm({ setCreateUser, setLogin }) {
     setPasswordConf(e.target.value);
   }
 
+  function resetCreateUserForm() {
+    setEmail("");
+    setPassword("");
+    setPasswordConf("");
+    setCreateUser(false);
+    setLogin(false);
+  }
+
+  function handleCancelCreateUser(e) {
+    e.preventDefault();
+    resetCreateUserForm();
+  }
+
   async function handleCreateUserForm(e) {
     e.preventDefault();
 
@@ -41,11 +54,7 @@ function CreateUserForm({ setCreateUser, setLogin }) {
         const response = await fetch("/user", options);
         const newUserId = await response.json();
         alert(`a new user was created with an id of ${newUserId}`);
-        setEmail("");
-        setPassword("");
-        setPasswordConf("");
-        setCreateUser(false);
-        setLogin(false);
+        resetCreateUserForm();
         return;
       } catch (error) {
         setError(error);
@@ -57,39 +66,44 @@ function CreateUserForm({ setCreateUser, setLogin }) {
 
   return (
     <form
-      id="create-user-form"
+      id='create-user-form'
       onSubmit={handleCreateUserForm}
     >
-      <label htmlFor="email">Email</label>
+      <p>Create user form</p>
+      <label htmlFor='email'>Email</label>
       <input
-        type="email"
-        name="email"
-        id="email"
+        type='email'
+        name='email'
+        id='email'
         value={email}
         onChange={handleEmail}
-        autoComplete="off"
+        autoComplete='off'
       />
-      <label htmlFor="password">Password</label>
+      <label htmlFor='password'>Password</label>
       <input
-        type="password"
-        name="password"
-        id="password"
+        type='password'
+        name='password'
+        id='password'
         value={password}
         onChange={handlePassword}
-        autoComplete="off"
+        autoComplete='off'
       />
-      <label htmlFor="password-conf">Confirm Passsword</label>
+      <label htmlFor='password-conf'>Confirm Passsword</label>
       <input
-        type="password"
-        name="passwordConf"
-        id="password-conf"
+        type='password'
+        name='passwordConf'
+        id='password-conf'
         value={passwordConf}
         onChange={handlePasswordConf}
-        autoComplete="off"
+        autoComplete='off'
       />
       <Button
-        type="submit"
-        text="Submit"
+        type='submit'
+        text='Submit'
+      />
+      <Button
+        text='cancel'
+        cb={handleCancelCreateUser}
       />
     </form>
   );

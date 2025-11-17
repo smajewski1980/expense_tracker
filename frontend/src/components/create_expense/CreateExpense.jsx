@@ -54,7 +54,6 @@ function CreateExpense({ setExpTrigger }) {
     };
     try {
       const res = await fetch("/expense", options);
-      if (res.ok) alert("expense added"); // remove this later when they hot load on the screen
       clearNewExpForm();
       setExpTrigger((prev) => !prev);
     } catch (error) {
