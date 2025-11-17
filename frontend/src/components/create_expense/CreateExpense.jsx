@@ -9,6 +9,7 @@ function CreateExpense() {
   const [expCategory, setExpCategory] = useState("");
   const [expPaidTo, setExpPaidTo] = useState("");
   const [expNotes, setExpNotes] = useState("");
+  const [error, setError] = useState(null);
 
   function handleShowCreateExpForm(e) {
     e.preventDefault();
@@ -17,7 +18,7 @@ function CreateExpense() {
 
   function generateExpObj() {
     return {
-      date: expDate,
+      date: `${expDate} 00:00:00`,
       expense_amount: expAmt,
       account_paid_from: acctPaidFrom,
       category: expCategory,
@@ -26,12 +27,29 @@ function CreateExpense() {
     };
   }
 
-  function handleCreateExp(e) {
+  async function handleCreateExp(e) {
     e.preventDefault();
     const newExpense = generateExpObj();
-    console.log(newExpense);
-    // here will go the fetch
-    // setShowCreateExpForm(false); <--undo this after done making form
+    const options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newExpense),
+    };
+    try {
+      const res = await fetch("/expense", options);
+      if (res.ok) alert("expense added"); // remove this later when they hot load on the screen
+      setExpDate("");
+      setExpAmt("");
+      setAcctPaidFrom("");
+      setExpCategory("");
+      setExpPaidTo("");
+      setExpNotes("");
+      setShowCreateExpForm(false);
+    } catch (error) {
+      setError(error);
+    }
   }
 
   function handleExpDate(e) {
@@ -63,6 +81,8 @@ function CreateExpense() {
     setExpNotes(e.target.value);
   }
 
+  if (error) alert(error);
+
   return (
     <>
       {!showCreateExpForm && (
@@ -93,6 +113,7 @@ function CreateExpense() {
               onChange={handleExpAmt}
               id="expAmt"
               value={expAmt}
+              autoComplete="off"
             />
           </div>
 
@@ -144,6 +165,7 @@ function CreateExpense() {
               id="expNotes"
               value={expNotes}
               onChange={handleExpNotes}
+              autoComplete="off"
             />
           </div>
 
