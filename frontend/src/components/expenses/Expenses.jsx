@@ -1,6 +1,7 @@
 import Expense from "../expense/Expense";
 import CreateExpense from "../create_expense/CreateExpense";
 import Filter from "../filter/Filter";
+import EditExpenseForm from "../edit_expense_form/EditExpenseForm";
 import { useEffect, useState } from "react";
 
 function Expenses({ currentUser }) {
@@ -8,6 +9,8 @@ function Expenses({ currentUser }) {
   const [expenses, setExpenses] = useState([]);
   const [expTrigger, setExpTrigger] = useState(false);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [showEditExpForm, setShowEditExpForm] = useState(false);
+  const [expIdToEdit, setExpIdToEdit] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -60,6 +63,8 @@ function Expenses({ currentUser }) {
         notes={exp.notes}
         categoryIdToStr={categoryIdToStr}
         setExpTrigger={setExpTrigger}
+        setShowEditExpForm={setShowEditExpForm}
+        setExpIdToEdit={setExpIdToEdit}
       />
     );
   }
@@ -68,6 +73,14 @@ function Expenses({ currentUser }) {
     <div>
       <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense setExpTrigger={setExpTrigger} />
+
+      {showEditExpForm && (
+        <EditExpenseForm
+          setShowEditExpForm={setShowEditExpForm}
+          expIdToEdit={expIdToEdit}
+          setExpIdToEdit={setExpIdToEdit}
+        />
+      )}
 
       <div className='expensesWrapper'>
         {typeof expenses === "string" && expenses}

@@ -1,8 +1,9 @@
 import Button from "../button/Button";
 
-function EditExpense({ expense_id }) {
+function EditExpense({ expense_id, setShowEditExpForm, setExpIdToEdit }) {
   function handleEditExpenseBtn() {
-    console.log(`expense id ${expense_id} will be edited`);
+    setExpIdToEdit(expense_id);
+    setShowEditExpForm(true);
   }
   return (
     <div>

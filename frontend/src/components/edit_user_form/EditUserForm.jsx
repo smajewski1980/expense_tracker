@@ -34,7 +34,6 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   }
 
   function handleCancelEditUser(e) {
-    console.log("getting here");
     e.preventDefault();
     setOldPw("");
     setNewPw("");
