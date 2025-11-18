@@ -59,6 +59,7 @@ function Expenses({ currentUser }) {
         paid_to={exp.paid_to}
         notes={exp.notes}
         categoryIdToStr={categoryIdToStr}
+        setExpTrigger={setExpTrigger}
       />
     );
   }

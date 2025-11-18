@@ -10,9 +10,10 @@ function Expense({
   paid_to,
   notes,
   categoryIdToStr,
+  setExpTrigger,
 }) {
   return (
-    <div>
+    <div data-exp-id={expense_id}>
       {/* need to make this more presentable*/}
       <h3>id: {expense_id}</h3>
       <p>{expense_id}</p>
@@ -23,7 +24,7 @@ function Expense({
       <p>{paid_to}</p>
       <p>{notes}</p>
       <EditExpense expense_id={expense_id} />{" "}
-      <DeleteExpense expense_id={expense_id} />
+      <DeleteExpense setExpTrigger={setExpTrigger} />
     </div>
   );
 }
