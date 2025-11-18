@@ -17,14 +17,13 @@ function Expense({
   return (
     <div data-exp-id={expense_id}>
       {/* need to make this more presentable*/}
-      <h3>id: {expense_id}</h3>
-      <p>{expense_id}</p>
-      <p>{expense_date}</p>
-      <p>{expense_amount}</p>
-      <p>{account_paid_from}</p>
-      <p>{categoryIdToStr(category_id)}</p>
-      <p>{paid_to}</p>
-      <p>{notes}</p>
+      <p>Expense Id: {expense_id}</p>
+      <p>Expense Date:{expense_date}</p>
+      <p>Expense Amount: {expense_amount}</p>
+      <p>Account Paid From: {account_paid_from}</p>
+      <p>Category: {categoryIdToStr(category_id)}</p>
+      <p>Paid To: {paid_to}</p>
+      <p>Notes: {notes}</p>
       <EditExpense
         expense_id={expense_id}
         setShowEditExpForm={setShowEditExpForm}
