@@ -69,6 +69,7 @@ function Expenses({ currentUser }) {
       <CreateExpense setExpTrigger={setExpTrigger} />
 
       <div className='expensesWrapper'>
+        {typeof expenses === "string" && expenses}
         {typeof expenses !== "string" &&
           filterCategory === "" &&
           expenses.map((exp) => {
