@@ -7,6 +7,7 @@ function Expenses({ currentUser }) {
   const [filterCategory, setFilterCategory] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [expTrigger, setExpTrigger] = useState(false);
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,31 +23,62 @@ function Expenses({ currentUser }) {
   }, [currentUser, expenses, expTrigger]);
 
   useEffect(() => {
-    // here will go a function that updates the filtered results
-    // console.log("filter cat", filterCategory);
+    setFilteredExpenses(
+      expenses.filter((exp) => {
+        return (
+          categoryIdToStr(exp.category_id).toLowerCase() === filterCategory
+        );
+      }),
+    );
   }, [filterCategory]);
+
+  function categoryIdToStr(catId) {
+    switch (catId) {
+      case 1:
+        return "Housing";
+      case 2:
+        return "Transportation";
+      case 3:
+        return "Food & Beverage";
+      case 4:
+        return "Utilities";
+      case 5:
+        return "Entertainment";
+    }
+  }
+
+  function populateExp(exp) {
+    return (
+      <Expense
+        key={exp.expense_id}
+        expense_id={exp.expense_id}
+        expense_date={exp.expense_date}
+        expense_amount={exp.expense_amount}
+        account_paid_from={exp.account_paid_from}
+        category_id={exp.category_id}
+        paid_to={exp.paid_to}
+        notes={exp.notes}
+        categoryIdToStr={categoryIdToStr}
+      />
+    );
+  }
 
   return (
     <div>
       <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense setExpTrigger={setExpTrigger} />
+
       <div className='expensesWrapper'>
-        {typeof expenses !== "string"
-          ? expenses.map((exp) => {
-              return (
-                <Expense
-                  key={exp.expense_id}
-                  expense_id={exp.expense_id}
-                  expense_date={exp.expense_date}
-                  expense_amount={exp.expense_amount}
-                  account_paid_from={exp.account_paid_from}
-                  category_id={exp.category_id}
-                  paid_to={exp.paid_to}
-                  notes={exp.notes}
-                />
-              );
-            })
-          : expenses}
+        {typeof expenses !== "string" &&
+          filterCategory === "" &&
+          expenses.map((exp) => {
+            return populateExp(exp);
+          })}
+        {typeof expenses !== "string" &&
+          filterCategory !== "" &&
+          filteredExpenses.map((exp) => {
+            return populateExp(exp);
+          })}
       </div>
     </div>
   );

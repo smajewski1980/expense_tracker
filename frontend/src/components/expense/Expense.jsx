@@ -9,21 +9,8 @@ function Expense({
   category_id,
   paid_to,
   notes,
+  categoryIdToStr,
 }) {
-  function categoryIdToStr(catId) {
-    switch (catId) {
-      case 1:
-        return "Housing";
-      case 2:
-        return "Transportation";
-      case 3:
-        return "Food & Beverage";
-      case 4:
-        return "Utilities";
-      case 5:
-        return "Entertainment";
-    }
-  }
   return (
     <div>
       {/* need to make this more presentable*/}
