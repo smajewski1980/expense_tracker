@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "../button/Button";
 
 function LoginForm({ setLogin, setCurrentUser }) {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ function LoginForm({ setLogin, setCurrentUser }) {
 
     try {
       const response = await fetch("/user/login", options);
+      if (!response.ok) return;
       if (response.ok) {
         setLogin(false);
       }
@@ -37,25 +39,31 @@ function LoginForm({ setLogin, setCurrentUser }) {
 
   return (
     <form onSubmit={handleLoginForm}>
-      <label htmlFor="login-email">email</label>
+      <label htmlFor='login-email'>email</label>
       <input
-        type="email"
-        name="email"
+        type='email'
+        name='email'
         value={email}
         onChange={handleLoginEmail}
-        id="login-email"
-        autoComplete="off"
+        id='login-email'
+        autoComplete='off'
       />
-      <label htmlFor="login-password">password</label>
+      <label htmlFor='login-password'>password</label>
       <input
-        type="password"
-        name="password"
-        id="login-password"
+        type='password'
+        name='password'
+        id='login-password'
         value={password}
         onChange={handleLoginPassword}
-        autoComplete="off"
+        autoComplete='off'
       />
-      <button type="submit">Login</button>
+      <Button text='Login' />
+      <Button
+        text='back'
+        cb={() => {
+          setLogin(false);
+        }}
+      />
     </form>
   );
 }
