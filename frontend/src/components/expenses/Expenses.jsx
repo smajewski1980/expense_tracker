@@ -11,6 +11,11 @@ function Expenses({ currentUser }) {
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [showEditExpForm, setShowEditExpForm] = useState(false);
   const [expIdToEdit, setExpIdToEdit] = useState(null);
+  const [expToEdit, setExpToEdit] = useState(null);
+
+  useEffect(() => {
+    setExpToEdit(expenses.filter((exp) => exp.expense_id === expIdToEdit));
+  }, [showEditExpForm]);
 
   useEffect(() => {
     async function fetchData() {
@@ -79,6 +84,8 @@ function Expenses({ currentUser }) {
           setShowEditExpForm={setShowEditExpForm}
           expIdToEdit={expIdToEdit}
           setExpIdToEdit={setExpIdToEdit}
+          categoryIdToStr={categoryIdToStr}
+          expToEdit={expToEdit}
         />
       )}
 

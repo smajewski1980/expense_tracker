@@ -459,10 +459,6 @@ components:
     ExpenseUpdate:
       type: object
       properties:
-        expense_id:
-          type: integer
-          format: int32
-          example: 47
         date:
           type: string
           example: 03/04/03
