@@ -79,7 +79,7 @@ function Expenses({ currentUser }) {
       <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense setExpTrigger={setExpTrigger} />
 
-      {showEditExpForm && (
+      {showEditExpForm && expToEdit[0] && (
         <EditExpenseForm
           setShowEditExpForm={setShowEditExpForm}
           expIdToEdit={expIdToEdit}

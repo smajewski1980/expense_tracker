@@ -28,13 +28,6 @@ function Expense({
         expense_id={expense_id}
         setShowEditExpForm={setShowEditExpForm}
         setExpIdToEdit={setExpIdToEdit}
-        expense_date={expense_date}
-        expense_amount={expense_amount}
-        account_paid_from={account_paid_from}
-        category_id={category_id}
-        paid_to={paid_to}
-        notes={notes}
-        categoryIdToStr={categoryIdToStr}
       />
       <DeleteExpense setExpTrigger={setExpTrigger} />
     </div>

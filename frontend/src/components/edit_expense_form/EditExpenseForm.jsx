@@ -5,7 +5,6 @@ function EditExpenseForm({
   setShowEditExpForm,
   expIdToEdit,
   expToEdit,
-  categoryIdToStr,
   setExpIdToEdit,
 }) {
   const [expDate, setExpDate] = useState("");
@@ -85,7 +84,15 @@ function EditExpenseForm({
 
   function handleEditExpForm(e) {
     e.preventDefault();
-    console.log(generateExpObj());
+    const editedExpense = generateExpObj();
+    const options = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(editedExpense),
+    };
+    console.log(editedExpense);
   }
 
   if (error) alert(error);
