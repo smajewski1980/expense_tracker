@@ -71,7 +71,7 @@ function EditExpenseForm({
   }
 
   function handleEditFormCancel(e) {
-    e.preventDefault();
+    e?.preventDefault();
     setShowEditExpForm(false);
     setExpIdToEdit(null);
     setExpDate("");
@@ -82,7 +82,7 @@ function EditExpenseForm({
     setExpNotes("");
   }
 
-  function handleEditExpForm(e) {
+  async function handleEditExpForm(e) {
     e.preventDefault();
     const editedExpense = generateExpObj();
     const options = {
@@ -92,7 +92,16 @@ function EditExpenseForm({
       },
       body: JSON.stringify(editedExpense),
     };
-    console.log(editedExpense);
+    try {
+      const res = await fetch(`/expense/${expIdToEdit}`, options);
+      if (res.ok) {
+        alert(`exp id ${expIdToEdit} was updated`);
+        handleEditFormCancel();
+        return;
+      }
+    } catch (error) {
+      setError(error);
+    }
   }
 
   if (error) alert(error);
