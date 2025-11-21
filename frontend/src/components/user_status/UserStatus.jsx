@@ -11,8 +11,14 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
   const [createUser, setCreateUser] = useState(false);
 
   function handleLoginBtn() {
-    setLogin(true);
-    setCreateUser(false);
+    if (!document.startViewTransition) {
+      setLogin(true);
+      setCreateUser(false);
+    }
+    document.startViewTransition(() => {
+      setLogin(true);
+      setCreateUser(false);
+    });
   }
 
   if (login) {

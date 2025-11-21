@@ -41,7 +41,13 @@ function CreateUserForm({ setCreateUser, setLogin }) {
 
   function handleCancelCreateUser(e) {
     e.preventDefault();
-    resetCreateUserForm();
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        resetCreateUserForm();
+      });
+    } else {
+      resetCreateUserForm();
+    }
   }
 
   async function handleCreateUserForm(e) {

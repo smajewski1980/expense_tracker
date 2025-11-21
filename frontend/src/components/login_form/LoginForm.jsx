@@ -37,6 +37,16 @@ function LoginForm({ setLogin, setCurrentUser }) {
     }
   }
 
+  function handleBackBtn() {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setLogin(false);
+      });
+    } else {
+      setLogin(false);
+    }
+  }
+
   return (
     <form onSubmit={handleLoginForm}>
       <label htmlFor='login-email'>email</label>
@@ -60,9 +70,7 @@ function LoginForm({ setLogin, setCurrentUser }) {
       <Button text='Login' />
       <Button
         text='back'
-        cb={() => {
-          setLogin(false);
-        }}
+        cb={handleBackBtn}
       />
     </form>
   );
