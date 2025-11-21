@@ -1,6 +1,9 @@
 img {
   max-width: 225px;
-  background-color: rgb(255 255 255 / 0.35);
-  padding: 0.5rem 0.75rem;
-  border-radius: 15px;
+  background-color: rgb(51 65 0);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px 50px 15px 15px;
+  corner-shape: squircle squircle scoop scoop;
+  outline: 2px solid rgb(51 65 0);
+  outline-offset: 3px;
 }

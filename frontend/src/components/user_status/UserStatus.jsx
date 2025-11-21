@@ -3,6 +3,7 @@ import Button from "../button/Button";
 import LoginForm from "../login_form/LoginForm";
 import Logout from "../logout/Logout";
 import CreateUserButton from "../create_user_btn/CreateUserButton";
+import styles from "./UserStatus.module.css";
 
 // once user is logged in this will show user logged in as...
 function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
@@ -25,21 +26,22 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
 
   return (
     <div>
-      {!currentUser && (
-        <CreateUserButton
-          createUser={createUser}
-          setCreateUser={setCreateUser}
-          setLogin={setLogin}
-        />
-      )}
+      <div className={styles.btnWrapper}>
+        {!currentUser && (
+          <CreateUserButton
+            createUser={createUser}
+            setCreateUser={setCreateUser}
+            setLogin={setLogin}
+          />
+        )}
 
-      {!login && !currentUser && (
-        <Button
-          text='Login'
-          cb={handleLoginBtn}
-        />
-      )}
-
+        {!login && !currentUser && (
+          <Button
+            text='Login'
+            cb={handleLoginBtn}
+          />
+        )}
+      </div>
       {!login && currentUser && (
         <>
           <p>Logged in as {currentUser}</p>
