@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../button/Button";
+import styles from "./CreateUserForm.module.css";
 
 function CreateUserForm({ setCreateUser, setLogin }) {
   const [email, setEmail] = useState("");
@@ -72,10 +73,10 @@ function CreateUserForm({ setCreateUser, setLogin }) {
 
   return (
     <form
-      id='create-user-form'
+      id={styles.createUserForm}
       onSubmit={handleCreateUserForm}
     >
-      <p>Create user form</p>
+      <h2>Create user form</h2>
       <label htmlFor='email'>Email</label>
       <input
         type='email'
@@ -103,14 +104,16 @@ function CreateUserForm({ setCreateUser, setLogin }) {
         onChange={handlePasswordConf}
         autoComplete='off'
       />
-      <Button
-        type='submit'
-        text='Submit'
-      />
-      <Button
-        text='cancel'
-        cb={handleCancelCreateUser}
-      />
+      <div className={styles.btnWrapper}>
+        <Button
+          type='submit'
+          text='Submit'
+        />
+        <Button
+          text='cancel'
+          cb={handleCancelCreateUser}
+        />
+      </div>
     </form>
   );
 }

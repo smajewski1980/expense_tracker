@@ -31,20 +31,19 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
   }
 
   return (
-    <div>
-      <div className={styles.btnWrapper}>
+    <div className={styles.userStatusWrapper}>
+      <div className={!createUser ? styles.btnWrapperFlex : styles.btnWrapper}>
+        {!login && !currentUser && (
+          <Button
+            text='Login'
+            cb={handleLoginBtn}
+          />
+        )}
         {!currentUser && (
           <CreateUserButton
             createUser={createUser}
             setCreateUser={setCreateUser}
             setLogin={setLogin}
-          />
-        )}
-
-        {!login && !currentUser && (
-          <Button
-            text='Login'
-            cb={handleLoginBtn}
           />
         )}
       </div>
