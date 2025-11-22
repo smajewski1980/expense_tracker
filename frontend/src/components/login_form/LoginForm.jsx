@@ -24,6 +24,7 @@ function LoginForm({ setLogin, setCurrentUser }) {
     e.preventDefault();
 
     try {
+      if (!email || !password) return;
       const response = await fetch("/user/login", options);
       if (!response.ok) return;
       if (response.ok) {
