@@ -15,8 +15,20 @@ button,
 input {
   font: inherit;
 }
+
 button {
   cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+button:focus-visible {
+  outline: 1px solid white;
+  outline-offset: 5px;
+  background-color: rgb(101, 116, 51);
+}
+
+button:hover {
+  background-color: rgb(101, 116, 51);
 }
 
 body {
