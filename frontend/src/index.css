@@ -15,6 +15,9 @@ button,
 input {
   font: inherit;
 }
+button {
+  cursor: pointer;
+}
 
 body {
   background-color: rgb(22, 1, 20);

@@ -53,6 +53,7 @@ function CreateUserForm({ setCreateUser, setLogin }) {
 
   async function handleCreateUserForm(e) {
     e.preventDefault();
+    if (!email || !password || !passwordConf) return;
 
     if (password !== passwordConf) {
       alert("Whoops, your passwords don't Match");

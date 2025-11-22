@@ -4,6 +4,7 @@ import LoginForm from "../login_form/LoginForm";
 import Logout from "../logout/Logout";
 import CreateUserButton from "../create_user_btn/CreateUserButton";
 import styles from "./UserStatus.module.css";
+import ReactDOM from "react-dom";
 
 // once user is logged in this will show user logged in as...
 function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
@@ -16,8 +17,10 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
       setCreateUser(false);
     }
     document.startViewTransition(() => {
-      setLogin(true);
-      setCreateUser(false);
+      ReactDOM.flushSync(() => {
+        setLogin(true);
+        setCreateUser(false);
+      });
     });
   }
 

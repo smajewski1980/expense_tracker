@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../button/Button";
+import styles from "./LoginForm.module.css";
 
 function LoginForm({ setLogin, setCurrentUser }) {
   const [email, setEmail] = useState("");
@@ -49,7 +50,17 @@ function LoginForm({ setLogin, setCurrentUser }) {
   }
 
   return (
-    <form onSubmit={handleLoginForm}>
+    <form
+      id={styles.loginForm}
+      onSubmit={handleLoginForm}
+    >
+      <div className={styles.loginBtnWrapper}>
+        <Button text='Login' />
+        <Button
+          text='back'
+          cb={handleBackBtn}
+        />
+      </div>
       <label htmlFor='login-email'>email</label>
       <input
         type='email'
@@ -67,11 +78,6 @@ function LoginForm({ setLogin, setCurrentUser }) {
         value={password}
         onChange={handleLoginPassword}
         autoComplete='off'
-      />
-      <Button text='Login' />
-      <Button
-        text='back'
-        cb={handleBackBtn}
       />
     </form>
   );

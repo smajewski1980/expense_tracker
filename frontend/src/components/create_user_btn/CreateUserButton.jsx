@@ -8,7 +8,6 @@ function CreateUserButton({ createUser, setCreateUser, setLogin }) {
     if (document.startViewTransition) {
       document.startViewTransition(() => {
         ReactDOM.flushSync(() => {
-          // it worked without flushSync, but the explanation of why it should be here made sense.....
           setCreateUser((prev) => !prev);
         });
       });

@@ -1,0 +1,23 @@
+#loginForm {
+  display: grid;
+  grid-template-columns: 375px;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+  margin-block-start: 1.75rem;
+  outline: 2px solid rgb(51 65 0);
+  border-radius: 15px 15px 50px 50px;
+  corner-shape: scoop scoop squircle squircle;
+}
+.loginBtnWrapper {
+  display: flex;
+  margin-block-start: -1.5rem;
+  /* justify-content: space-between; */
+  margin-inline: auto;
+  gap: 1rem;
+  /* width: 173px; */
+  /* padding-inline-end: 1.5rem; */
+}
+
+.loginBtnWrapper button:last-child {
+  width: 100px;
+}
