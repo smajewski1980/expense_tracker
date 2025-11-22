@@ -20,6 +20,7 @@
   margin-block-start: -1.5rem;
   margin-inline: auto;
   gap: 1rem;
+  transform: translateY(-0.13rem);
 }
 
 .loginBtnWrapper button:last-child {

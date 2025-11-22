@@ -52,7 +52,11 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
       </div>
       {!login && currentUser && (
         <>
-          <p>Logged in as {currentUser}</p>
+          <p className={styles.currUser}>
+            <span>Logged in as:</span>
+            <br />
+            {currentUser}
+          </p>
           <Logout
             setLogin={setLogin}
             setCurrentUser={setCurrentUser}

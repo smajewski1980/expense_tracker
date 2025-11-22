@@ -1,4 +1,5 @@
 import Button from "../button/Button";
+import styles from "./Logout.module.css";
 
 function Logout({ setLogin, setCurrentUser, setShowEditUserForm }) {
   async function handleLogout() {
@@ -15,9 +16,9 @@ function Logout({ setLogin, setCurrentUser, setShowEditUserForm }) {
   }
 
   return (
-    <div>
+    <div className={styles.logoutBtnWrapper}>
       <Button
-        text="Logout"
+        text='Logout'
         cb={handleLogout}
       />
     </div>

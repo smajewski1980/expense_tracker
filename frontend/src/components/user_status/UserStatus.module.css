@@ -17,3 +17,12 @@
 .userStatusWrapper > div > button:first-child {
   view-transition-name: btnLogin;
 }
+
+.currUser {
+  text-align: center;
+}
+
+.currUser span {
+  font-size: 1.125rem;
+  line-height: 2;
+}
