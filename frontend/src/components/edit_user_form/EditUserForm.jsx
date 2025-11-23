@@ -7,38 +7,21 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   const [newPw, setNewPw] = useState("");
   const [newPwConf, setNewPwConf] = useState("");
 
-  async function handleDeleteUserBtn(e) {
-    e.preventDefault();
-
-    const deleteCheck = confirm(
-      `Are you sure you want to delete the account for ${currentUser}? There's no going back...`,
-    );
-
-    if (deleteCheck) {
-      const userToDel = currentUser;
-
-      try {
-        const response = await fetch("/user", { method: "DELETE" });
-        if (response.status === 204) {
-          alert(`${userToDel}'s account just went poof!`);
-          setCurrentUser("");
-          setShowEditUserForm(false);
-        }
-      } catch (error) {
-        return new Error(error);
-      }
-      return;
-    }
-
-    return;
-  }
-
   function handleCancelEditUser(e) {
     e.preventDefault();
-    setOldPw("");
-    setNewPw("");
-    setNewPwConf("");
-    setShowEditUserForm(false);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setOldPw("");
+        setNewPw("");
+        setNewPwConf("");
+        setShowEditUserForm(false);
+      });
+    } else {
+      setOldPw("");
+      setNewPw("");
+      setNewPwConf("");
+      setShowEditUserForm(false);
+    }
   }
 
   async function handleEditSubmit(e) {
@@ -83,51 +66,49 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   }
 
   return (
-    <form onSubmit={handleEditSubmit}>
-      <Button
-        text='Delete User'
-        type='delete'
-        cb={handleDeleteUserBtn}
+    <form
+      id={styles.editUserForm}
+      onSubmit={handleEditSubmit}
+    >
+      <h2>Change Password</h2>
+
+      <label htmlFor='old-pw'>old password</label>
+      <input
+        type='password'
+        name='oldPw'
+        id='old-pw'
+        value={oldPw}
+        onChange={handleEditOldPw}
+        autoComplete='off'
       />
-      <p>Change Password</p>
-      <div className='input-wrapper'>
-        <label htmlFor='old-pw'>old password</label>
-        <input
-          type='password'
-          name='oldPw'
-          id='old-pw'
-          value={oldPw}
-          onChange={handleEditOldPw}
-          autoComplete='off'
-        />
-      </div>
-      <div className='input-wrapper'>
-        <label htmlFor='new-pw'>new password</label>
-        <input
-          type='password'
-          name='newPw'
-          id='new-pw'
-          value={newPw}
-          onChange={handleEditNewPw}
-          autoComplete='off'
-        />
-      </div>
-      <div className='input-wrapper'>
-        <label htmlFor='new-pw-conf'>confirm new password</label>
-        <input
-          type='password'
-          name='newPwConf'
-          id='new-pw-conf'
-          value={newPwConf}
-          onChange={handleEditNewPwConf}
-          autoComplete='off'
-        />
-      </div>
-      <Button text='submit' />
-      <Button
-        text='cancel'
-        cb={handleCancelEditUser}
+
+      <label htmlFor='new-pw'>new password</label>
+      <input
+        type='password'
+        name='newPw'
+        id='new-pw'
+        value={newPw}
+        onChange={handleEditNewPw}
+        autoComplete='off'
       />
+
+      <label htmlFor='new-pw-conf'>confirm new password</label>
+      <input
+        type='password'
+        name='newPwConf'
+        id='new-pw-conf'
+        value={newPwConf}
+        onChange={handleEditNewPwConf}
+        autoComplete='off'
+      />
+
+      <div className={styles.editUserBtnWrapper}>
+        <Button text='submit' />
+        <Button
+          text='cancel'
+          cb={handleCancelEditUser}
+        />
+      </div>
     </form>
   );
 }

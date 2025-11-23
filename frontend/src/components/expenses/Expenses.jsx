@@ -3,6 +3,7 @@ import CreateExpense from "../create_expense/CreateExpense";
 import Filter from "../filter/Filter";
 import EditExpenseForm from "../edit_expense_form/EditExpenseForm";
 import { useEffect, useState } from "react";
+import styles from "./Expenses.module.css";
 
 function Expenses({ currentUser }) {
   const [filterCategory, setFilterCategory] = useState("");
@@ -75,7 +76,7 @@ function Expenses({ currentUser }) {
   }
 
   return (
-    <div>
+    <div className={styles.expensesWrapper}>
       <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense setExpTrigger={setExpTrigger} />
 

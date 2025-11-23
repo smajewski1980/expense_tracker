@@ -5,9 +5,12 @@ import styles from "./Header.module.css";
 
 import { useState } from "react";
 
-function Header({ currentUser, setCurrentUser }) {
-  const [showEditUserForm, setShowEditUserForm] = useState(false);
-
+function Header({
+  currentUser,
+  setCurrentUser,
+  showEditUserForm,
+  setShowEditUserForm,
+}) {
   return (
     <header>
       <Logo />

@@ -30,6 +30,8 @@
 .loggedInBtnWrapper {
   display: flex;
   align-items: center;
-  padding-block: 1rem;
+  padding-block: 1rem 0rem;
   gap: 1rem;
+  justify-content: center;
+  isolation: isolate;
 }

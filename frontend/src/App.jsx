@@ -5,13 +5,18 @@ import { useState } from "react";
 
 function App() {
   const [currentUser, setCurrentUser] = useState("");
+  const [showEditUserForm, setShowEditUserForm] = useState(false);
   return (
     <>
       <Header
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
+        showEditUserForm={showEditUserForm}
+        setShowEditUserForm={setShowEditUserForm}
       />
-      {currentUser && <Expenses currentUser={currentUser} />}
+      {currentUser && !showEditUserForm && (
+        <Expenses currentUser={currentUser} />
+      )}
     </>
   );
 }

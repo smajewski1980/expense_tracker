@@ -17,6 +17,32 @@ function UserStatus({
   const [login, setLogin] = useState(false);
   const [createUser, setCreateUser] = useState(false);
 
+  async function handleDeleteUserBtn(e) {
+    e.preventDefault();
+
+    const deleteCheck = confirm(
+      `Are you sure you want to delete the account for ${currentUser}? There's no going back...`,
+    );
+
+    if (deleteCheck) {
+      const userToDel = currentUser;
+
+      try {
+        const response = await fetch("/user", { method: "DELETE" });
+        if (response.status === 204) {
+          alert(`${userToDel}'s account just went poof!`);
+          setCurrentUser("");
+          setShowEditUserForm(false);
+        }
+      } catch (error) {
+        return new Error(error);
+      }
+      return;
+    }
+
+    return;
+  }
+
   function handleLoginBtn() {
     if (!document.startViewTransition) {
       setLogin(true);
@@ -28,6 +54,16 @@ function UserStatus({
         setCreateUser(false);
       });
     });
+  }
+
+  function handleEditUserBtn() {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setShowEditUserForm((prev) => !prev);
+      });
+    } else {
+      setShowEditUserForm((prev) => !prev);
+    }
   }
 
   if (login) {
@@ -69,17 +105,25 @@ function UserStatus({
               setCurrentUser={setCurrentUser}
               setShowEditUserForm={setShowEditUserForm}
             />
-            {currentUser && (
-              <>
-                <EditUser
-                  currentUser={currentUser}
-                  setCurrentUser={setCurrentUser}
-                  showEditUserForm={showEditUserForm}
-                  setShowEditUserForm={setShowEditUserForm}
-                />
-              </>
+            {!showEditUserForm ? (
+              <Button
+                text='Account Options'
+                cb={handleEditUserBtn}
+              />
+            ) : (
+              <Button
+                text='Delete User'
+                type='delete'
+                cb={handleDeleteUserBtn}
+              />
             )}
           </div>
+          <EditUser
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            showEditUserForm={showEditUserForm}
+            setShowEditUserForm={setShowEditUserForm}
+          />
         </>
       )}
     </div>

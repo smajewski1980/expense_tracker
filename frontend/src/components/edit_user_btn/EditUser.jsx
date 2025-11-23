@@ -1,6 +1,4 @@
-import { useState } from "react";
 import EditUserForm from "../edit_user_form/EditUserForm";
-import Button from "../button/Button";
 
 function EditUser({
   currentUser,
@@ -8,19 +6,8 @@ function EditUser({
   showEditUserForm,
   setShowEditUserForm,
 }) {
-  function handleEditUserBtn() {
-    setShowEditUserForm((prev) => !prev);
-  }
-
   return (
     <div>
-      {!showEditUserForm && (
-        <Button
-          text="Account Options"
-          cb={handleEditUserBtn}
-        />
-      )}
-
       {showEditUserForm && (
         <EditUserForm
           currentUser={currentUser}
