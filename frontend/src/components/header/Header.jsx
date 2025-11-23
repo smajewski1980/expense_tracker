@@ -1,6 +1,6 @@
 import Logo from "../logo/Logo";
 import UserStatus from "../user_status/UserStatus";
-import EditUser from "../edit_user_btn/EditUser";
+
 import styles from "./Header.module.css";
 
 import { useState } from "react";
@@ -15,17 +15,8 @@ function Header({ currentUser, setCurrentUser }) {
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
         setShowEditUserForm={setShowEditUserForm}
+        showEditUserForm={showEditUserForm}
       />
-      {currentUser && (
-        <>
-          <EditUser
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
-            showEditUserForm={showEditUserForm}
-            setShowEditUserForm={setShowEditUserForm}
-          />
-        </>
-      )}
     </header>
   );
 }

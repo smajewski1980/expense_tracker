@@ -6,9 +6,17 @@ function Logout({ setLogin, setCurrentUser, setShowEditUserForm }) {
     try {
       const response = await fetch("/user/logout");
       if (response.ok) {
-        setLogin(false);
-        setCurrentUser("");
-        setShowEditUserForm(false);
+        if (document.startViewTransition) {
+          document.startViewTransition(() => {
+            setLogin(false);
+            setCurrentUser("");
+            setShowEditUserForm(false);
+            return;
+          });
+          setLogin(false);
+          setCurrentUser("");
+          setShowEditUserForm(false);
+        }
       }
     } catch (error) {
       console.log(error);

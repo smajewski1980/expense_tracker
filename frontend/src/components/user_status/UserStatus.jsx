@@ -4,10 +4,16 @@ import LoginForm from "../login_form/LoginForm";
 import Logout from "../logout/Logout";
 import CreateUserButton from "../create_user_btn/CreateUserButton";
 import styles from "./UserStatus.module.css";
+import EditUser from "../edit_user_btn/EditUser";
 import ReactDOM from "react-dom";
 
 // once user is logged in this will show user logged in as...
-function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
+function UserStatus({
+  currentUser,
+  setCurrentUser,
+  setShowEditUserForm,
+  showEditUserForm,
+}) {
   const [login, setLogin] = useState(false);
   const [createUser, setCreateUser] = useState(false);
 
@@ -57,11 +63,23 @@ function UserStatus({ currentUser, setCurrentUser, setShowEditUserForm }) {
             <br />
             {currentUser}
           </p>
-          <Logout
-            setLogin={setLogin}
-            setCurrentUser={setCurrentUser}
-            setShowEditUserForm={setShowEditUserForm}
-          />
+          <div className={styles.loggedInBtnWrapper}>
+            <Logout
+              setLogin={setLogin}
+              setCurrentUser={setCurrentUser}
+              setShowEditUserForm={setShowEditUserForm}
+            />
+            {currentUser && (
+              <>
+                <EditUser
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                  showEditUserForm={showEditUserForm}
+                  setShowEditUserForm={setShowEditUserForm}
+                />
+              </>
+            )}
+          </div>
         </>
       )}
     </div>
