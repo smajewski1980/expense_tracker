@@ -13,6 +13,7 @@ function Expenses({ currentUser }) {
   const [showEditExpForm, setShowEditExpForm] = useState(false);
   const [expIdToEdit, setExpIdToEdit] = useState(null);
   const [expToEdit, setExpToEdit] = useState(null);
+  const [showCreateExpForm, setShowCreateExpForm] = useState(false);
 
   useEffect(() => {
     setExpToEdit(expenses.filter((exp) => exp.expense_id === expIdToEdit));
@@ -77,7 +78,11 @@ function Expenses({ currentUser }) {
 
   return (
     <div className={styles.expensesWrapper}>
-      <CreateExpense setExpTrigger={setExpTrigger} />
+      <CreateExpense
+        setExpTrigger={setExpTrigger}
+        showCreateExpForm={showCreateExpForm}
+        setShowCreateExpForm={setShowCreateExpForm}
+      />
       {typeof expenses !== "string" && (
         <Filter setFilterCategory={setFilterCategory} />
       )}
@@ -93,7 +98,7 @@ function Expenses({ currentUser }) {
       )}
 
       <div className={styles.expenseListWrapper}>
-        {typeof expenses === "string" && expenses}
+        {typeof expenses === "string" && !showCreateExpForm && expenses}
         {typeof expenses !== "string" &&
           filterCategory === "" &&
           expenses.map((exp) => {

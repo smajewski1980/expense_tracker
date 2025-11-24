@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Button from "../button/Button";
+import styles from "./CreateExpense.module.css";
 
-function CreateExpense({ setExpTrigger }) {
-  const [showCreateExpForm, setShowCreateExpForm] = useState(false);
+function CreateExpense({
+  setExpTrigger,
+  showCreateExpForm,
+  setShowCreateExpForm,
+}) {
   const [expDate, setExpDate] = useState("");
   const [expAmt, setExpAmt] = useState("");
   const [acctPaidFrom, setAcctPaidFrom] = useState("");
@@ -13,12 +17,24 @@ function CreateExpense({ setExpTrigger }) {
 
   function handleShowCreateExpForm(e) {
     e.preventDefault();
-    setShowCreateExpForm((prev) => !prev);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setShowCreateExpForm(true);
+      });
+    } else {
+      setShowCreateExpForm(true);
+    }
   }
 
   function handleCancelNewExp(e) {
-    handleShowCreateExpForm(e);
-    clearNewExpForm();
+    e.preventDefault(e);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        clearNewExpForm();
+      });
+    } else {
+      clearNewExpForm();
+    }
   }
 
   function generateExpObj() {
@@ -54,8 +70,15 @@ function CreateExpense({ setExpTrigger }) {
     };
     try {
       const res = await fetch("/expense", options);
-      clearNewExpForm();
-      setExpTrigger((prev) => !prev);
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          clearNewExpForm();
+          setExpTrigger((prev) => !prev);
+        });
+      } else {
+        clearNewExpForm();
+        setExpTrigger((prev) => !prev);
+      }
     } catch (error) {
       setError(error);
     }
@@ -101,96 +124,88 @@ function CreateExpense({ setExpTrigger }) {
         />
       )}
       {showCreateExpForm && (
-        <form onSubmit={handleCreateExp}>
-          <p>Create expense form</p>
+        <form
+          id={styles.createExpenseForm}
+          onSubmit={handleCreateExp}
+        >
+          <h2>Create expense form</h2>
 
-          <div className='inputWrapper'>
-            <label htmlFor='expDate'>Expense Date</label>
-            <input
-              type='date'
-              name='date'
-              onChange={handleExpDate}
-              id='expDate'
-              required={true}
-            />
-          </div>
-
-          <div className='inputWrapper'>
-            <label htmlFor='expAmt'>Expense Amount</label>
-            <input
-              type='text'
-              name='expense_amount'
-              onChange={handleExpAmt}
-              id='expAmt'
-              value={expAmt}
-              autoComplete='off'
-              required={true}
-            />
-          </div>
-
-          <div className='inputWrapper'>
-            <label htmlFor='acctPaidFrom'>Account Paid From</label>
-            <input
-              type='text'
-              name='account_paid_from'
-              id='acctPaidFrom'
-              value={acctPaidFrom}
-              onChange={handleAcctPaidFrom}
-              autoComplete='off'
-              required={true}
-            />
-          </div>
-
-          <div className='inputWrapper'>
-            <label htmlFor='expCategory'>Expense Category</label>
-            <select
-              name='category'
-              id='expCategory'
-              onChange={handleExpCategory}
-              required={true}
-            >
-              <option value=''></option>
-              <option value='1'>Housing</option>
-              <option value='2'>Transportation</option>
-              <option value='3'>Food & Beverage</option>
-              <option value='4'>Utilities</option>
-              <option value='5'>Entertainment</option>
-            </select>
-          </div>
-
-          <div className='inputWrapper'>
-            <label htmlFor='expPaidTo'>Expense Paid to</label>
-            <input
-              type='text'
-              name='paid_to'
-              id='expPaidTo'
-              value={expPaidTo}
-              onChange={handleExpPaidTo}
-              autoComplete='off'
-              required={true}
-            />
-          </div>
-
-          <div className='inputWrapper'>
-            <label htmlFor='expNotes'>Notes</label>
-            <input
-              type='text'
-              name='notes'
-              id='expNotes'
-              value={expNotes}
-              onChange={handleExpNotes}
-              autoComplete='off'
-            />
-          </div>
-
-          <Button
-            text='Submit Expense'
-            type='submit'
+          <label htmlFor='expDate'>Expense Date</label>
+          <input
+            type='date'
+            name='date'
+            onChange={handleExpDate}
+            id='expDate'
+            required={true}
           />
-          <Button
-            text='Cancel'
-            cb={handleCancelNewExp}
+
+          <label htmlFor='expAmt'>Expense Amount</label>
+          <input
+            type='text'
+            name='expense_amount'
+            onChange={handleExpAmt}
+            id='expAmt'
+            value={expAmt}
+            autoComplete='off'
+            required={true}
           />
+
+          <label htmlFor='acctPaidFrom'>Account Paid From</label>
+          <input
+            type='text'
+            name='account_paid_from'
+            id='acctPaidFrom'
+            value={acctPaidFrom}
+            onChange={handleAcctPaidFrom}
+            autoComplete='off'
+            required={true}
+          />
+
+          <label htmlFor='expCategory'>Expense Category</label>
+          <select
+            name='category'
+            id='expCategory'
+            onChange={handleExpCategory}
+            required={true}
+          >
+            <option value=''></option>
+            <option value='1'>Housing</option>
+            <option value='2'>Transportation</option>
+            <option value='3'>Food & Beverage</option>
+            <option value='4'>Utilities</option>
+            <option value='5'>Entertainment</option>
+          </select>
+
+          <label htmlFor='expPaidTo'>Expense Paid to</label>
+          <input
+            type='text'
+            name='paid_to'
+            id='expPaidTo'
+            value={expPaidTo}
+            onChange={handleExpPaidTo}
+            autoComplete='off'
+            required={true}
+          />
+
+          <label htmlFor='expNotes'>Notes</label>
+          <input
+            type='text'
+            name='notes'
+            id='expNotes'
+            value={expNotes}
+            onChange={handleExpNotes}
+            autoComplete='off'
+          />
+          <div className={styles.createExpBtnWrapper}>
+            <Button
+              text='Submit Expense'
+              type='submit'
+            />
+            <Button
+              text='Cancel'
+              cb={handleCancelNewExp}
+            />
+          </div>
         </form>
       )}
     </>
