@@ -1,4 +1,4 @@
-import Button from "../button/Button";
+import styles from "./Filter.module.css";
 
 function Filter({ setFilterCategory }) {
   function handleSelectCategory(e) {
@@ -6,8 +6,8 @@ function Filter({ setFilterCategory }) {
   }
 
   return (
-    <div>
-      <p>Filter by category</p>
+    <div className={styles.filterInputWrapper}>
+      <label htmlFor='category-select'>Filter by category</label>
       <select
         name='categories'
         id='category-select'

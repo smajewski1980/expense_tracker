@@ -77,8 +77,10 @@ function Expenses({ currentUser }) {
 
   return (
     <div className={styles.expensesWrapper}>
-      <Filter setFilterCategory={setFilterCategory} />
       <CreateExpense setExpTrigger={setExpTrigger} />
+      {typeof expenses !== "string" && (
+        <Filter setFilterCategory={setFilterCategory} />
+      )}
 
       {showEditExpForm && expToEdit[0] && (
         <EditExpenseForm
@@ -90,7 +92,7 @@ function Expenses({ currentUser }) {
         />
       )}
 
-      <div className='expensesWrapper'>
+      <div className={styles.expenseListWrapper}>
         {typeof expenses === "string" && expenses}
         {typeof expenses !== "string" &&
           filterCategory === "" &&

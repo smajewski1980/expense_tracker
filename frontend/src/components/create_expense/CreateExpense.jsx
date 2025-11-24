@@ -96,7 +96,7 @@ function CreateExpense({ setExpTrigger }) {
     <>
       {!showCreateExpForm && (
         <Button
-          text='Create Expense'
+          text='Create New Expense'
           cb={handleShowCreateExpForm}
         />
       )}
