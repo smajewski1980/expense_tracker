@@ -3,7 +3,13 @@ import Button from "../button/Button";
 function EditExpense({ expense_id, setShowEditExpForm, setExpIdToEdit }) {
   function handleEditExpenseBtn() {
     setExpIdToEdit(expense_id);
-    setShowEditExpForm(true);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setShowEditExpForm(true);
+      });
+    } else {
+      setShowEditExpForm(true);
+    }
   }
   return (
     <div>

@@ -1,0 +1,23 @@
+#editExpenseForm {
+  padding: 1rem;
+  outline: 2px solid rgb(51 65 0);
+  display: grid;
+  grid-template-columns: subgrid;
+  gap: 0.5rem;
+  border-radius: 10px 10px 25px 25px;
+  margin-block: 0.75rem 1.25rem;
+}
+
+@supports (corner-shape: scoop) {
+  #editExpenseForm {
+    border-radius: 15px 15px 50px 50px;
+    corner-shape: scoop scoop squircle squircle;
+  }
+}
+
+.editExpFormBtnWrapper {
+  justify-self: center;
+  display: flex;
+  margin-block-start: 1rem;
+  gap: 1rem;
+}

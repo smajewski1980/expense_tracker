@@ -16,6 +16,13 @@ input {
   font: inherit;
 }
 
+input,
+select {
+  background-color: rgb(233, 232, 232);
+  border-radius: 5px;
+  padding: 0.25rem;
+}
+
 button {
   cursor: pointer;
   transition: background-color 0.1s;

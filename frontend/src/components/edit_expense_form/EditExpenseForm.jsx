@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import Button from "../button/Button";
+import styles from "./EditExpenseForm.module.css";
 
 function EditExpenseForm({
   setShowEditExpForm,
@@ -72,14 +74,29 @@ function EditExpenseForm({
 
   function handleEditFormCancel(e) {
     e?.preventDefault();
-    setShowEditExpForm(false);
-    setExpIdToEdit(null);
-    setExpDate("");
-    setExpAmt("");
-    setAcctPaidFrom("");
-    setExpCategory("");
-    setExpPaidTo("");
-    setExpNotes("");
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        ReactDOM.flushSync(() => {
+          setShowEditExpForm(false);
+          setExpIdToEdit(null);
+          setExpDate("");
+          setExpAmt("");
+          setAcctPaidFrom("");
+          setExpCategory("");
+          setExpPaidTo("");
+          setExpNotes("");
+        });
+      });
+    } else {
+      setShowEditExpForm(false);
+      setExpIdToEdit(null);
+      setExpDate("");
+      setExpAmt("");
+      setAcctPaidFrom("");
+      setExpCategory("");
+      setExpPaidTo("");
+      setExpNotes("");
+    }
   }
 
   async function handleEditExpForm(e) {
@@ -108,94 +125,88 @@ function EditExpenseForm({
 
   return (
     <>
-      <form onSubmit={handleEditExpForm}>
-        <p>Edit Expense Form</p>
+      <form
+        id={styles.editExpenseForm}
+        onSubmit={handleEditExpForm}
+      >
+        <h2>Edit Expense Form</h2>
 
-        <div className='inputWrapper'>
-          <label htmlFor='expDate'>Expense Date</label>
-          <input
-            type='date'
-            name='date'
-            onChange={handleExpDate}
-            id='expDate'
-            required={true}
-            value={expDate}
-          />
-        </div>
-
-        <div className='inputWrapper'>
-          <label htmlFor='expAmt'>Expense Amount</label>
-          <input
-            type='text'
-            name='expense_amount'
-            onChange={handleExpAmt}
-            id='expAmt'
-            value={expAmt}
-            autoComplete='off'
-            required={true}
-          />
-        </div>
-
-        <div className='inputWrapper'>
-          <label htmlFor='acctPaidFrom'>Account Paid From</label>
-          <input
-            type='text'
-            name='account_paid_from'
-            id='acctPaidFrom'
-            value={acctPaidFrom}
-            onChange={handleAcctPaidFrom}
-            autoComplete='off'
-            required={true}
-          />
-        </div>
-
-        <div className='inputWrapper'>
-          <label htmlFor='expCategory'>Expense Category</label>
-          <select
-            name='category'
-            id='expCategory'
-            onChange={handleExpCategory}
-            required={true}
-            value={expCategory}
-          >
-            <option value=''></option>
-            <option value='1'>Housing</option>
-            <option value='2'>Transportation</option>
-            <option value='3'>Food & Beverage</option>
-            <option value='4'>Utilities</option>
-            <option value='5'>Entertainment</option>
-          </select>
-        </div>
-
-        <div className='inputWrapper'>
-          <label htmlFor='expPaidTo'>Expense Paid to</label>
-          <input
-            type='text'
-            name='paid_to'
-            id='expPaidTo'
-            value={expPaidTo}
-            onChange={handleExpPaidTo}
-            autoComplete='off'
-            required={true}
-          />
-        </div>
-
-        <div className='inputWrapper'>
-          <label htmlFor='expNotes'>Notes</label>
-          <input
-            type='text'
-            name='notes'
-            id='expNotes'
-            value={expNotes}
-            onChange={handleExpNotes}
-            autoComplete='off'
-          />
-        </div>
-        <Button text='Edit Expense' />
-        <Button
-          text='cancel'
-          cb={handleEditFormCancel}
+        <label htmlFor='expDate'>Expense Date</label>
+        <input
+          type='date'
+          name='date'
+          onChange={handleExpDate}
+          id='expDate'
+          required={true}
+          value={expDate}
         />
+
+        <label htmlFor='expAmt'>Expense Amount</label>
+        <input
+          type='text'
+          name='expense_amount'
+          onChange={handleExpAmt}
+          id='expAmt'
+          value={expAmt}
+          autoComplete='off'
+          required={true}
+        />
+
+        <label htmlFor='acctPaidFrom'>Account Paid From</label>
+        <input
+          type='text'
+          name='account_paid_from'
+          id='acctPaidFrom'
+          value={acctPaidFrom}
+          onChange={handleAcctPaidFrom}
+          autoComplete='off'
+          required={true}
+        />
+
+        <label htmlFor='expCategory'>Expense Category</label>
+        <select
+          name='category'
+          id='expCategory'
+          onChange={handleExpCategory}
+          required={true}
+          value={expCategory}
+        >
+          <option value=''></option>
+          <option value='1'>Housing</option>
+          <option value='2'>Transportation</option>
+          <option value='3'>Food & Beverage</option>
+          <option value='4'>Utilities</option>
+          <option value='5'>Entertainment</option>
+        </select>
+
+        <label htmlFor='expPaidTo'>Expense Paid to</label>
+        <input
+          type='text'
+          name='paid_to'
+          id='expPaidTo'
+          value={expPaidTo}
+          onChange={handleExpPaidTo}
+          autoComplete='off'
+          required={true}
+        />
+
+        <label htmlFor='expNotes'>Notes</label>
+        <input
+          type='text'
+          name='notes'
+          id='expNotes'
+          value={expNotes}
+          onChange={handleExpNotes}
+          autoComplete='off'
+        />
+
+        <div className={styles.editExpFormBtnWrapper}>
+          <Button text='Edit Expense' />
+          <Button
+            text='cancel'
+            cb={handleEditFormCancel}
+          />
+        </div>
       </form>
     </>
   );

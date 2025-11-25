@@ -101,6 +101,7 @@ function Expenses({ currentUser }) {
         {typeof expenses === "string" && !showCreateExpForm && expenses}
         {typeof expenses !== "string" &&
           filterCategory === "" &&
+          !showEditExpForm &&
           expenses.map((exp) => {
             return populateExp(exp);
           })}
