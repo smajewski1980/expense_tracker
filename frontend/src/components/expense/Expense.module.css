@@ -1,0 +1,17 @@
+details {
+  width: 375px;
+  margin-block: 0.25rem;
+  outline: 2px solid rgb(51 65 0);
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+}
+
+details:first-child {
+  margin-block-start: 0.5rem;
+}
+
+summary {
+  cursor: pointer;
+  padding-left: 1rem;
+  text-indent: -1rem;
+}
