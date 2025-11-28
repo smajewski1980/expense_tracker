@@ -107,6 +107,7 @@ function Expenses({ currentUser }) {
           })}
         {typeof expenses !== "string" &&
           filterCategory !== "" &&
+          !showEditExpForm &&
           filteredExpenses.map((exp) => {
             return populateExp(exp);
           })}

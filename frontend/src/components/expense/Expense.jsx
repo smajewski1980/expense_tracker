@@ -23,18 +23,17 @@ function Expense({
       <summary>
         On {expense_date.split("T")[0]} ${expense_amount} was paid to {paid_to}
       </summary>
-      {/* <p>Expense Date:{expense_date.split("T")[0]}</p> */}
-      {/* <p>Expense Amount: {expense_amount}</p> */}
       <p>Account Paid From: {account_paid_from}</p>
       <p>Category: {categoryIdToStr(category_id)}</p>
-      {/* <p>Paid To: {paid_to}</p> */}
       <p>Notes: {notes}</p>
-      <EditExpense
-        expense_id={expense_id}
-        setShowEditExpForm={setShowEditExpForm}
-        setExpIdToEdit={setExpIdToEdit}
-      />
-      <DeleteExpense setExpTrigger={setExpTrigger} />
+      <div className={styles.detailsBtnWrapper}>
+        <EditExpense
+          expense_id={expense_id}
+          setShowEditExpForm={setShowEditExpForm}
+          setExpIdToEdit={setExpIdToEdit}
+        />
+        <DeleteExpense setExpTrigger={setExpTrigger} />
+      </div>
     </details>
   );
 }
