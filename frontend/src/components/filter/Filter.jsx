@@ -6,21 +6,24 @@ function Filter({ setFilterCategory }) {
   }
 
   return (
-    <div className={styles.filterInputWrapper}>
-      <label htmlFor='category-select'>Filter by category</label>
-      <select
-        name='categories'
-        id='category-select'
-        onChange={handleSelectCategory}
-      >
-        <option value=''></option>
-        <option value='housing'>Housing</option>
-        <option value='transportation'>Transportation</option>
-        <option value='food & beverage'>Food & Beverage</option>
-        <option value='utilities'>Utilities</option>
-        <option value='entertainment'>Entertainment</option>
-      </select>
-    </div>
+    <>
+      <div className={styles.filterInputWrapper}>
+        <label htmlFor='category-select'>Filter by category</label>
+        <select
+          name='categories'
+          id='category-select'
+          onChange={handleSelectCategory}
+        >
+          <option value=''></option>
+          <option value='housing'>Housing</option>
+          <option value='transportation'>Transportation</option>
+          <option value='food & beverage'>Food & Beverage</option>
+          <option value='utilities'>Utilities</option>
+          <option value='entertainment'>Entertainment</option>
+        </select>
+      </div>
+      <p>Click an expense for more info.</p>
+    </>
   );
 }
 

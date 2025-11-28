@@ -14,3 +14,9 @@
   padding: 0.25rem;
   border-radius: 5px;
 }
+
+.filterInputWrapper + p {
+  text-align: center;
+  margin-block-end: 0.5rem;
+  font-weight: 600;
+}

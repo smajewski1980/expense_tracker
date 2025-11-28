@@ -17,3 +17,11 @@
 /* .expensesWrapper * {
   outline: 1px solid red;
 } */
+
+dialog {
+  position: absolute;
+  margin-inline: auto;
+  z-index: 999;
+  padding: 1rem;
+  border: none;
+}

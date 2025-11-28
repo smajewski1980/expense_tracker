@@ -14,10 +14,21 @@ function Expenses({ currentUser }) {
   const [expIdToEdit, setExpIdToEdit] = useState(null);
   const [expToEdit, setExpToEdit] = useState(null);
   const [showCreateExpForm, setShowCreateExpForm] = useState(false);
+  const [showMoreId, setShowMoreId] = useState(undefined);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     setExpToEdit(expenses.filter((exp) => exp.expense_id === expIdToEdit));
   }, [showEditExpForm]);
+
+  useEffect(() => {
+    if (showMoreId) {
+      const exp = expenses.filter((exp) => {
+        return exp.expense_id === parseInt(showMoreId.split("-")[1]);
+      });
+      populateModal(exp[0]);
+    }
+  }, [modalOpen]);
 
   useEffect(() => {
     async function fetchData() {
@@ -57,6 +68,19 @@ function Expenses({ currentUser }) {
     }
   }
 
+  function populateModal(exp) {
+    console.log(exp);
+    const modal = document.querySelector("dialog");
+    modal.innerHTML = `
+      <p>${exp.account_paid_from}</p>
+      <p>${categoryIdToStr(exp.category_id)}</p>
+      <p>$${exp.expense_amount}</p>
+      <p>${exp.expense_date}</p>
+      <p>${exp.paid_to}</p>
+      <p>${exp.notes}</p>
+    `;
+  }
+
   function populateExp(exp) {
     return (
       <Expense
@@ -72,47 +96,54 @@ function Expenses({ currentUser }) {
         setExpTrigger={setExpTrigger}
         setShowEditExpForm={setShowEditExpForm}
         setExpIdToEdit={setExpIdToEdit}
+        setShowMoreId={setShowMoreId}
+        setModalOpen={setModalOpen}
       />
     );
   }
 
   return (
-    <div className={styles.expensesWrapper}>
-      <CreateExpense
-        setExpTrigger={setExpTrigger}
-        showCreateExpForm={showCreateExpForm}
-        setShowCreateExpForm={setShowCreateExpForm}
-      />
-      {typeof expenses !== "string" && (
-        <Filter setFilterCategory={setFilterCategory} />
-      )}
-
-      {showEditExpForm && expToEdit[0] && (
-        <EditExpenseForm
-          setShowEditExpForm={setShowEditExpForm}
-          expIdToEdit={expIdToEdit}
-          setExpIdToEdit={setExpIdToEdit}
-          categoryIdToStr={categoryIdToStr}
-          expToEdit={expToEdit}
+    <>
+      <dialog open={modalOpen}>
+        <h1>modal</h1>
+      </dialog>
+      <div className={styles.expensesWrapper}>
+        <CreateExpense
+          setExpTrigger={setExpTrigger}
+          showCreateExpForm={showCreateExpForm}
+          setShowCreateExpForm={setShowCreateExpForm}
         />
-      )}
+        {typeof expenses !== "string" && (
+          <Filter setFilterCategory={setFilterCategory} />
+        )}
 
-      <div className={styles.expenseListWrapper}>
-        {typeof expenses === "string" && !showCreateExpForm && expenses}
-        {typeof expenses !== "string" &&
-          filterCategory === "" &&
-          !showEditExpForm &&
-          expenses.map((exp) => {
-            return populateExp(exp);
-          })}
-        {typeof expenses !== "string" &&
-          filterCategory !== "" &&
-          !showEditExpForm &&
-          filteredExpenses.map((exp) => {
-            return populateExp(exp);
-          })}
+        {showEditExpForm && expToEdit[0] && (
+          <EditExpenseForm
+            setShowEditExpForm={setShowEditExpForm}
+            expIdToEdit={expIdToEdit}
+            setExpIdToEdit={setExpIdToEdit}
+            categoryIdToStr={categoryIdToStr}
+            expToEdit={expToEdit}
+          />
+        )}
+        {/* need to sort the expenses by date */}
+        <div className={styles.expenseListWrapper}>
+          {typeof expenses === "string" && !showCreateExpForm && expenses}
+          {typeof expenses !== "string" &&
+            filterCategory === "" &&
+            !showEditExpForm &&
+            expenses.map((exp) => {
+              return populateExp(exp);
+            })}
+          {typeof expenses !== "string" &&
+            filterCategory !== "" &&
+            !showEditExpForm &&
+            filteredExpenses.map((exp) => {
+              return populateExp(exp);
+            })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
