@@ -2,7 +2,13 @@ import styles from "./Filter.module.css";
 
 function Filter({ setFilterCategory }) {
   function handleSelectCategory(e) {
-    setFilterCategory(e.target.value);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setFilterCategory(e.target.value);
+      });
+    } else {
+      setFilterCategory(e.target.value);
+    }
   }
 
   return (
