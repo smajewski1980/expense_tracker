@@ -4,6 +4,9 @@ import Filter from "../filter/Filter";
 import EditExpenseForm from "../edit_expense_form/EditExpenseForm";
 import { useEffect, useState } from "react";
 import styles from "./Expenses.module.css";
+import Button from "../button/Button";
+import EditExpense from "../edit_expense/EditExpense";
+import DeleteExpense from "../delete_expense/DeleteExpense";
 
 function Expenses({ currentUser }) {
   const [filterCategory, setFilterCategory] = useState("");
@@ -18,7 +21,9 @@ function Expenses({ currentUser }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    setExpToEdit(expenses.filter((exp) => exp.expense_id === expIdToEdit));
+    setExpToEdit(
+      expenses.filter((exp) => exp.expense_id === parseInt(expIdToEdit)),
+    );
   }, [showEditExpForm]);
 
   useEffect(() => {
@@ -69,16 +74,17 @@ function Expenses({ currentUser }) {
   }
 
   function populateModal(exp) {
-    console.log(exp);
-    const modal = document.querySelector("dialog");
-    modal.innerHTML = `
+    if (showMoreId) {
+      const modal = document.querySelector("dialog");
+      modal.children[0].innerHTML = `
       <p>${exp.account_paid_from}</p>
       <p>${categoryIdToStr(exp.category_id)}</p>
       <p>$${exp.expense_amount}</p>
       <p>${exp.expense_date}</p>
       <p>${exp.paid_to}</p>
       <p>${exp.notes}</p>
-    `;
+      `;
+    }
   }
 
   function populateExp(exp) {
@@ -98,14 +104,36 @@ function Expenses({ currentUser }) {
         setExpIdToEdit={setExpIdToEdit}
         setShowMoreId={setShowMoreId}
         setModalOpen={setModalOpen}
+        handleModalClose={handleModalClose}
       />
     );
+  }
+
+  function handleModalClose() {
+    setModalOpen(false);
   }
 
   return (
     <>
       <dialog open={modalOpen}>
-        <h1>modal</h1>
+        <div className={styles.modalContentWrapper}></div>
+        <div className={styles.detailsBtnWrapper}>
+          <EditExpense
+            expense_id={showMoreId}
+            setShowEditExpForm={setShowEditExpForm}
+            setExpIdToEdit={setExpIdToEdit}
+            handleModalClose={handleModalClose}
+          />
+          <DeleteExpense
+            setExpTrigger={setExpTrigger}
+            idToDelete={parseInt(showMoreId?.split("-")[1])}
+            handleModalClose={handleModalClose}
+          />
+          <Button
+            text='close'
+            cb={handleModalClose}
+          />
+        </div>
       </dialog>
       <div className={styles.expensesWrapper}>
         <CreateExpense

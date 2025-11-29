@@ -1,5 +1,3 @@
-import EditExpense from "../edit_expense/EditExpense";
-import DeleteExpense from "../delete_expense/DeleteExpense";
 import styles from "./Expense.module.css";
 
 function Expense({
@@ -33,14 +31,7 @@ function Expense({
     //   <p>Account Paid From: {account_paid_from}</p>
     //   <p>Category: {categoryIdToStr(category_id)}</p>
     //   <p>Notes: {notes}</p>
-    //   <div className={styles.detailsBtnWrapper}>
-    //     <EditExpense
-    //       expense_id={expense_id}
-    //       setShowEditExpForm={setShowEditExpForm}
-    //       setExpIdToEdit={setExpIdToEdit}
-    //     />
-    //     <DeleteExpense setExpTrigger={setExpTrigger} />
-    //   </div>
+
     // </details>
     <div
       className={styles.expense}

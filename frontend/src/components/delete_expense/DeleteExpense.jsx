@@ -1,13 +1,13 @@
 import Button from "../button/Button";
 
-function DeleteExpense({ setExpTrigger }) {
+function DeleteExpense({ setExpTrigger, idToDelete, handleModalClose }) {
   async function handleDeleteExpBtn(e) {
-    const idToDel = e.target.closest("div").dataset.expId;
     try {
-      confirm(`expense id ${idToDel} will be deleted`);
-      const res = await fetch(`/expense/${idToDel}`, { method: "DELETE" });
+      confirm(`expense id ${idToDelete} will be deleted`);
+      const res = await fetch(`/expense/${idToDelete}`, { method: "DELETE" });
       if (res.status === 204) {
         setExpTrigger((prev) => !prev);
+        handleModalClose();
       }
     } catch (error) {
       console.log(error);
