@@ -58,6 +58,13 @@ function Expenses({ currentUser }) {
     );
   }, [filterCategory]);
 
+  useEffect(() => {
+    const elToFocus = document.querySelector(
+      "dialog div:nth-child(2) div:first-child button",
+    );
+    elToFocus.focus();
+  }, [modalOpen]);
+
   function categoryIdToStr(catId) {
     switch (catId) {
       case 1:

@@ -32,7 +32,13 @@ function Expense({
     <div
       className={styles.expense}
       onClick={handleShowMore}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          handleShowMore(e);
+        }
+      }}
       id={`exp-${expense_id}`}
+      tabIndex={0}
     >
       <p>
         <span>{paid_to}</span>
