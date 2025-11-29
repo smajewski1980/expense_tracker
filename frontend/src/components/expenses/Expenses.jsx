@@ -141,6 +141,7 @@ function Expenses({ currentUser }) {
             setExpTrigger={setExpTrigger}
             idToDelete={parseInt(showMoreId?.split("-")[1])}
             handleModalClose={handleModalClose}
+            setShowMoreId={setShowMoreId}
           />
           <Button
             text='close'
