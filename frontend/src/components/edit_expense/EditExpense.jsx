@@ -7,7 +7,6 @@ function EditExpense({
   handleModalClose,
 }) {
   function handleEditExpenseBtn() {
-    console.log(expense_id.split("-")[1]);
     setExpIdToEdit(expense_id.split("-")[1]);
     if (document.startViewTransition) {
       document.startViewTransition(() => {

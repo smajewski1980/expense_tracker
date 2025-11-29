@@ -148,6 +148,7 @@ function Expenses({ currentUser }) {
           />
         </div>
       </dialog>
+      <div className={modalOpen ? styles.backdrop : undefined}></div>
       <div className={styles.expensesWrapper}>
         <CreateExpense
           setExpTrigger={setExpTrigger}
