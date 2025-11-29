@@ -17,22 +17,18 @@ function Expense({
 }) {
   function handleShowMore(e) {
     const id = e.target.closest("div").id;
-    setShowMoreId(id);
-    setModalOpen(true);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setShowMoreId(id);
+        setModalOpen(true);
+      });
+    } else {
+      setShowMoreId(id);
+      setModalOpen(true);
+    }
   }
-  return (
-    // <details
-    //   name='expense'
-    //   data-exp-id={expense_id}
-    // >
-    //   <summary>
-    //     On {expense_date.split("T")[0]} ${expense_amount} was paid to {paid_to}
-    //   </summary>
-    //   <p>Account Paid From: {account_paid_from}</p>
-    //   <p>Category: {categoryIdToStr(category_id)}</p>
-    //   <p>Notes: {notes}</p>
 
-    // </details>
+  return (
     <div
       className={styles.expense}
       onClick={handleShowMore}

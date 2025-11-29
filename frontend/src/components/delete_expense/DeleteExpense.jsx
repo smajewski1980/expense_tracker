@@ -3,11 +3,17 @@ import Button from "../button/Button";
 function DeleteExpense({ setExpTrigger, idToDelete, handleModalClose }) {
   async function handleDeleteExpBtn(e) {
     try {
-      confirm(`expense id ${idToDelete} will be deleted`);
+      if (!confirm(`expense id ${idToDelete} will be deleted`)) return;
       const res = await fetch(`/expense/${idToDelete}`, { method: "DELETE" });
       if (res.status === 204) {
         setExpTrigger((prev) => !prev);
-        handleModalClose();
+        if (document.startViewTransition) {
+          document.startViewTransition(() => {
+            handleModalClose();
+          });
+        } else {
+          handleModalClose();
+        }
       }
     } catch (error) {
       console.log(error);

@@ -81,7 +81,7 @@ function Expenses({ currentUser }) {
       <p>${categoryIdToStr(exp.category_id)}</p>
       <p>$${exp.expense_amount}</p>
       <p>${exp.expense_date}</p>
-      <p>${exp.paid_to}</p>
+      <p>${exp.paid_to.replace("&amp;", "&")}</p>
       <p>${exp.notes}</p>
       `;
     }
@@ -96,7 +96,7 @@ function Expenses({ currentUser }) {
         expense_amount={exp.expense_amount}
         account_paid_from={exp.account_paid_from}
         category_id={exp.category_id}
-        paid_to={exp.paid_to}
+        paid_to={exp.paid_to.replace("&amp;", "&")}
         notes={exp.notes}
         categoryIdToStr={categoryIdToStr}
         setExpTrigger={setExpTrigger}
@@ -110,7 +110,13 @@ function Expenses({ currentUser }) {
   }
 
   function handleModalClose() {
-    setModalOpen(false);
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setModalOpen(false);
+      });
+    } else {
+      setModalOpen(false);
+    }
   }
 
   return (
