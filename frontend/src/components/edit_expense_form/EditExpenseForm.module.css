@@ -1,19 +1,20 @@
 #editExpenseForm {
-  padding: 1rem;
-  outline: 2px solid rgb(51 65 0);
+  padding-block: 0.5rem 1rem;
+  /* outline: 2px solid rgb(51 65 0); */
   display: grid;
   grid-template-columns: subgrid;
   gap: 0.5rem;
-  border-radius: 10px 10px 25px 25px;
-  margin-block: 0.75rem 1.25rem;
+  /* border-radius: 10px 10px 25px 25px; */
+  margin-block-start: 0.5rem;
+  border-top: 2px solid rgb(51 65 0);
 }
 
-@supports (corner-shape: scoop) {
+/* @supports (corner-shape: scoop) {
   #editExpenseForm {
     border-radius: 15px 15px 50px 50px;
     corner-shape: scoop scoop squircle squircle;
   }
-}
+} */
 
 .editExpFormBtnWrapper {
   justify-self: center;

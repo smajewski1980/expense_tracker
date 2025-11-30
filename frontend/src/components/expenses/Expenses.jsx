@@ -170,7 +170,7 @@ function Expenses({ currentUser }) {
           />
         )}
         {/* need to sort the expenses by date */}
-        {!showCreateExpForm && (
+        {!showCreateExpForm && !showEditExpForm && (
           <div className={styles.expenseListWrapper}>
             {typeof expenses === "string" && !showCreateExpForm && expenses}
             {typeof expenses !== "string" &&

@@ -20,7 +20,7 @@ function Filter({ setFilterCategory }) {
           id='category-select'
           onChange={handleSelectCategory}
         >
-          <option value=''></option>
+          <option value=''>All Expenses</option>
           <option value='housing'>Housing</option>
           <option value='transportation'>Transportation</option>
           <option value='food & beverage'>Food & Beverage</option>
