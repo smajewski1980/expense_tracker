@@ -156,7 +156,7 @@ function Expenses({ currentUser }) {
           showCreateExpForm={showCreateExpForm}
           setShowCreateExpForm={setShowCreateExpForm}
         />
-        {typeof expenses !== "string" && (
+        {typeof expenses !== "string" && !showCreateExpForm && (
           <Filter setFilterCategory={setFilterCategory} />
         )}
 
@@ -170,21 +170,21 @@ function Expenses({ currentUser }) {
           />
         )}
         {/* need to sort the expenses by date */}
-        <div className={styles.expenseListWrapper}>
-          {typeof expenses === "string" && !showCreateExpForm && expenses}
-          {typeof expenses !== "string" &&
-            filterCategory === "" &&
-            !showEditExpForm &&
-            expenses.map((exp) => {
-              return populateExp(exp);
-            })}
-          {typeof expenses !== "string" &&
-            filterCategory !== "" &&
-            !showEditExpForm &&
-            filteredExpenses.map((exp) => {
-              return populateExp(exp);
-            })}
-        </div>
+        {!showCreateExpForm && (
+          <div className={styles.expenseListWrapper}>
+            {typeof expenses === "string" && !showCreateExpForm && expenses}
+            {typeof expenses !== "string" &&
+              filterCategory === "" &&
+              expenses.map((exp) => {
+                return populateExp(exp);
+              })}
+            {typeof expenses !== "string" &&
+              filterCategory !== "" &&
+              filteredExpenses.map((exp) => {
+                return populateExp(exp);
+              })}
+          </div>
+        )}
       </div>
     </>
   );
