@@ -8,7 +8,8 @@
 }
 
 @supports (corner-shape: scoop) {
-  .expensesWrapper {
+  .expensesWrapper,
+  dialog {
     border-radius: 15px 15px 50px 50px;
     corner-shape: scoop scoop squircle squircle;
   }
@@ -28,15 +29,19 @@ dialog {
   position: absolute;
   margin-inline: auto;
   z-index: 999;
-  padding: 1rem;
-  border: none;
+  padding: 1.25rem 1rem 1.25rem 1.25rem;
+  border: 2px solid rgb(238, 255, 179);
   width: 375px;
   backdrop-filter: blur(2px);
-  background-color: rgba(110, 117, 85, 0.5);
+  background-color: rgba(96, 102, 73, 0.65);
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modalContentWrapper {
   color: rgb(238, 255, 179);
+  padding-inline-end: 0.75rem;
 }
 
 .backdrop {
@@ -47,7 +52,7 @@ dialog {
 }
 
 .detailsBtnWrapper {
-  display: flex;
+  display: grid;
   gap: 1rem;
-  margin-block-start: 0.85rem;
+  padding-inline: 0.5rem;
 }

@@ -20,13 +20,17 @@ function Expense({
     if (document.startViewTransition) {
       document.startViewTransition(() => {
         setShowMoreId(id);
+        document.querySelector("dialog").style.display = "flex";
         setModalOpen(true);
       });
     } else {
       setShowMoreId(id);
+      document.querySelector("dialog").style.display = "flex";
       setModalOpen(true);
     }
   }
+
+  const formatedDate = new Date(expense_date);
 
   return (
     <div
@@ -43,7 +47,7 @@ function Expense({
       <p>
         <span>{paid_to}</span>
         <span>${expense_amount}</span>
-        <span>{expense_date.split("T")[0]}</span>
+        <span>{formatedDate.toLocaleDateString()}</span>
       </p>
     </div>
   );

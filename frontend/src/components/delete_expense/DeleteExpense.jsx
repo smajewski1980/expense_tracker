@@ -29,7 +29,8 @@ function DeleteExpense({
 
   return (
     <Button
-      text='Delete'
+      text='delete'
+      type='modal'
       cb={handleDeleteExpBtn}
     />
   );

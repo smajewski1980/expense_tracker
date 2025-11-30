@@ -6,6 +6,7 @@ function CreateExpense({
   setExpTrigger,
   showCreateExpForm,
   setShowCreateExpForm,
+  setShowEditExpForm,
 }) {
   const [expDate, setExpDate] = useState("");
   const [expAmt, setExpAmt] = useState("");
@@ -19,9 +20,11 @@ function CreateExpense({
     e.preventDefault();
     if (document.startViewTransition) {
       document.startViewTransition(() => {
+        setShowEditExpForm(false);
         setShowCreateExpForm(true);
       });
     } else {
+      setShowEditExpForm(false);
       setShowCreateExpForm(true);
     }
   }

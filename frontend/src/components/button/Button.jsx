@@ -2,9 +2,20 @@ import React from "react";
 import styles from "./Button.module.css";
 
 function Button({ text, cb, type }) {
+  function setButtonClass(type) {
+    switch (type) {
+      case "delete":
+        return styles.btnDelete;
+      case "modal":
+        return styles.btnModal;
+      default:
+        return styles.btnReg;
+    }
+  }
+
   return (
     <button
-      className={type === "delete" ? styles.btnDelete : styles.btnReg}
+      className={setButtonClass(type)}
       onClick={cb}
     >
       {text}

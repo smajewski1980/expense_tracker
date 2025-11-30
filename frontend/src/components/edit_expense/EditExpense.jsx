@@ -22,7 +22,8 @@ function EditExpense({
   return (
     <div>
       <Button
-        text='Edit'
+        text='edit'
+        type='modal'
         cb={handleEditExpenseBtn}
       />
     </div>

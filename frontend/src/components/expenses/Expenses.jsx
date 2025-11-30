@@ -81,13 +81,18 @@ function Expenses({ currentUser }) {
   }
 
   function populateModal(exp) {
+    // const tempDate = new Date(exp.expense_date).toDateString().split(" ");
+    // tempDate[2] += ",";
+    // const formatedDate = tempDate.join(" ");
+    const formatedDate = new Date(exp.expense_date);
+
     if (showMoreId) {
       const modal = document.querySelector("dialog");
       modal.children[0].innerHTML = `
       <p>${exp.account_paid_from}</p>
       <p>${categoryIdToStr(exp.category_id)}</p>
       <p>$${exp.expense_amount}</p>
-      <p>${exp.expense_date}</p>
+      <p>${formatedDate.toLocaleDateString()}</p>
       <p>${exp.paid_to.replace("&amp;", "&")}</p>
       <p>${exp.notes}</p>
       `;
@@ -119,9 +124,11 @@ function Expenses({ currentUser }) {
   function handleModalClose() {
     if (document.startViewTransition) {
       document.startViewTransition(() => {
+        document.querySelector("dialog").style.display = "none";
         setModalOpen(false);
       });
     } else {
+      document.querySelector("dialog").style.display = "none";
       setModalOpen(false);
     }
   }
@@ -145,6 +152,7 @@ function Expenses({ currentUser }) {
           />
           <Button
             text='close'
+            type='modal'
             cb={handleModalClose}
           />
         </div>
@@ -155,12 +163,13 @@ function Expenses({ currentUser }) {
           setExpTrigger={setExpTrigger}
           showCreateExpForm={showCreateExpForm}
           setShowCreateExpForm={setShowCreateExpForm}
+          setShowEditExpForm={setShowEditExpForm}
         />
-        {typeof expenses !== "string" && !showCreateExpForm && (
-          <Filter setFilterCategory={setFilterCategory} />
-        )}
+        {typeof expenses !== "string" &&
+          !showCreateExpForm &&
+          !showEditExpForm && <Filter setFilterCategory={setFilterCategory} />}
 
-        {showEditExpForm && expToEdit[0] && (
+        {showEditExpForm && expToEdit[0] && !showCreateExpForm && (
           <EditExpenseForm
             setShowEditExpForm={setShowEditExpForm}
             expIdToEdit={expIdToEdit}
