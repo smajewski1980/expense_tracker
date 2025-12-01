@@ -81,20 +81,18 @@ function Expenses({ currentUser }) {
   }
 
   function populateModal(exp) {
-    // const tempDate = new Date(exp.expense_date).toDateString().split(" ");
-    // tempDate[2] += ",";
-    // const formatedDate = tempDate.join(" ");
     const formatedDate = new Date(exp.expense_date);
 
     if (showMoreId) {
       const modal = document.querySelector("dialog");
       modal.children[0].innerHTML = `
-      <p>${exp.account_paid_from}</p>
-      <p>${categoryIdToStr(exp.category_id)}</p>
-      <p>$${exp.expense_amount}</p>
-      <p>${formatedDate.toLocaleDateString()}</p>
-      <p>${exp.paid_to.replace("&amp;", "&")}</p>
-      <p>${exp.notes}</p>
+      <p><span>${formatedDate.toLocaleDateString()}</span> - $${
+        exp.expense_amount
+      }</p>
+      <p><span>Paid To:</span> ${exp.paid_to.replace("&amp;", "&")}</p>
+      <p><span>From:</span> ${exp.account_paid_from}</p>
+      <p><span>Category:</span> ${categoryIdToStr(exp.category_id)}</p>
+      <p><span>Notes:</span> ${exp.notes}</p>
       `;
     }
   }
