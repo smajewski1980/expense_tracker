@@ -61,7 +61,7 @@ dialog {
 }
 
 dialog span {
-  color: hsl(73, 100%, 80%);
+  color: rgb(233, 255, 153);
   font-weight: 400;
   font-size: 1rem;
 }
