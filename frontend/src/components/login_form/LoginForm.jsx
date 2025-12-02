@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../button/Button";
 import styles from "./LoginForm.module.css";
+import toasty from "../../toasty";
 
 function LoginForm({ setLogin, setCurrentUser }) {
   const [email, setEmail] = useState("");
@@ -25,9 +26,22 @@ function LoginForm({ setLogin, setCurrentUser }) {
     e.preventDefault();
 
     try {
-      if (!email || !password) return;
+      if (!email || !password) {
+        if (!email && !password) {
+          toasty("Please fill out both fields.");
+        } else if (!email) {
+          toasty("Please include a valid email to login.");
+        } else {
+          toasty("Please include a password.");
+        }
+
+        return;
+      }
       const response = await fetch("/user/login", options);
-      if (!response.ok) return;
+      if (!response.ok) {
+        toasty("email or password are incorrect, please try again.");
+        return;
+      }
       if (response.ok) {
         setLogin(false);
       }
