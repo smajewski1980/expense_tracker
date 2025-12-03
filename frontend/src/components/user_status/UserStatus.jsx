@@ -6,6 +6,7 @@ import CreateUserButton from "../create_user_btn/CreateUserButton";
 import styles from "./UserStatus.module.css";
 import EditUser from "../edit_user_btn/EditUser";
 import ReactDOM from "react-dom";
+import toasty from "../../toasty";
 
 // once user is logged in this will show user logged in as...
 function UserStatus({
@@ -30,7 +31,7 @@ function UserStatus({
       try {
         const response = await fetch("/user", { method: "DELETE" });
         if (response.status === 204) {
-          alert(`${userToDel}'s account just went poof!`);
+          toasty(`${userToDel}'s account just went poof!`);
           setCurrentUser("");
           setShowEditUserForm(false);
         }

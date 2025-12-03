@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../button/Button";
 import styles from "./EditUserForm.module.css";
+import toasty from "../../toasty";
 
 function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
   const [oldPw, setOldPw] = useState("");
@@ -26,6 +27,15 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
 
   async function handleEditSubmit(e) {
     e.preventDefault();
+
+    if (!oldPw || !newPw || !newPwConf) {
+      return toasty("please fill out all fields");
+    }
+
+    if (newPw !== newPwConf) {
+      return toasty("new password and confirmation password do not match");
+    }
+
     const updated = {
       oldPassword: oldPw,
       password: newPw,
@@ -43,7 +53,11 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
     try {
       const response = await fetch("/user", options);
       if (response.ok) {
-        alert("password has been updated");
+        toasty(
+          "password has been updated",
+          "linear-gradient(to top, rgba(143, 156, 96, 1), rgba(121, 131, 85, 1)",
+          "rgb(155, 168, 109)",
+        );
         setNewPw("");
         setNewPwConf("");
         setShowEditUserForm(false);
