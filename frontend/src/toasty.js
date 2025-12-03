@@ -1,4 +1,4 @@
-export default function toasty(message) {
+export default function toasty(message, bgColor, outlineClr) {
   Toastify({
     text: message,
     duration: 3000,
@@ -8,8 +8,8 @@ export default function toasty(message) {
     position: "left", // `left`, `center` or `right`
     stopOnFocus: true, // Prevents dismissing of toast on hover
     style: {
-      background:
-        "linear-gradient(to top, rgba(194, 91, 78, 1), rgba(131, 60, 60, 1)",
+      background: bgColor,
+      outline: `2px solid ${outlineClr}`,
       padding: ".5rem .75rem .5rem 2.25rem",
       textIndent: "-1.5rem",
     },

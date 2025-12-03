@@ -53,7 +53,8 @@ function LoginForm({ setLogin, setCurrentUser }) {
     }
   }
 
-  function handleBackBtn() {
+  function handleBackBtn(e) {
+    e.preventDefault();
     if (document.startViewTransition) {
       document.startViewTransition(() => {
         setLogin(false);

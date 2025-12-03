@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../button/Button";
 import styles from "./CreateUserForm.module.css";
+import toasty from "../../toasty";
 
 function CreateUserForm({ setCreateUser, setLogin }) {
   const [email, setEmail] = useState("");
@@ -53,15 +54,22 @@ function CreateUserForm({ setCreateUser, setLogin }) {
 
   async function handleCreateUserForm(e) {
     e.preventDefault();
-    if (!email || !password || !passwordConf) return;
+    if (!email || !password || !passwordConf) {
+      toasty("please fill out the form completely");
+      return;
+    }
 
     if (password !== passwordConf) {
-      alert("Whoops, your passwords don't Match");
+      return toasty("passwords do not match");
     } else {
       try {
         const response = await fetch("/user", options);
         const newUserId = await response.json();
-        alert(`a new user was created with an id of ${newUserId}`);
+        toasty(
+          `username ${email} was created`,
+          "linear-gradient(to top, rgba(143, 156, 96, 1), rgba(121, 131, 85, 1)",
+          "rgb(155, 168, 109)",
+        );
         resetCreateUserForm();
         return;
       } catch (error) {
@@ -70,7 +78,7 @@ function CreateUserForm({ setCreateUser, setLogin }) {
     }
   }
 
-  if (error) alert(error);
+  if (error) toasty(error);
 
   return (
     <form
