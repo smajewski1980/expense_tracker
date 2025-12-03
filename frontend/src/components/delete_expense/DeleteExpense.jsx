@@ -1,4 +1,5 @@
 import Button from "../button/Button";
+import toasty from "../../toasty";
 
 function DeleteExpense({
   setExpTrigger,
@@ -16,10 +17,12 @@ function DeleteExpense({
           document.startViewTransition(() => {
             handleModalClose();
             setShowMoreId(undefined);
+            toasty("expense deleted");
           });
         } else {
           handleModalClose();
           setShowMoreId(undefined);
+          toasty("expense deleted");
         }
       }
     } catch (error) {

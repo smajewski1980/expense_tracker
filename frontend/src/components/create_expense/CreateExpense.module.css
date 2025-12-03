@@ -8,6 +8,11 @@
   margin-block-start: -1rem;
 }
 
+#createExpenseForm span {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
 @supports (corner-shape: scoop) {
   #createExpenseForm {
     border-radius: 15px 15px 50px 50px;

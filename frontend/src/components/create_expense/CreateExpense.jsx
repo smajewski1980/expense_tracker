@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../button/Button";
 import styles from "./CreateExpense.module.css";
+import toasty from "../../toasty";
 
 function CreateExpense({
   setExpTrigger,
@@ -15,6 +16,10 @@ function CreateExpense({
   const [expPaidTo, setExpPaidTo] = useState("");
   const [expNotes, setExpNotes] = useState("");
   const [error, setError] = useState(null);
+
+  function emptyFields() {
+    return !expDate || !expAmt || !acctPaidFrom || !expCategory || !expPaidTo;
+  }
 
   function handleShowCreateExpForm(e) {
     e.preventDefault();
@@ -63,6 +68,11 @@ function CreateExpense({
 
   async function handleCreateExp(e) {
     e.preventDefault();
+
+    if (emptyFields()) {
+      return toasty("all fields are required except the notes");
+    }
+
     const newExpense = generateExpObj();
     const options = {
       method: "POST",
@@ -71,6 +81,7 @@ function CreateExpense({
       },
       body: JSON.stringify(newExpense),
     };
+
     try {
       const res = await fetch("/expense", options);
       if (document.startViewTransition) {
@@ -116,7 +127,7 @@ function CreateExpense({
     setExpNotes(e.target.value);
   }
 
-  if (error) alert(error);
+  if (error) toasty(error);
 
   return (
     <>
@@ -139,7 +150,6 @@ function CreateExpense({
             name='date'
             onChange={handleExpDate}
             id='expDate'
-            required={true}
           />
 
           <label htmlFor='expAmt'>Expense Amount</label>
@@ -150,7 +160,6 @@ function CreateExpense({
             id='expAmt'
             value={expAmt}
             autoComplete='off'
-            required={true}
           />
 
           <label htmlFor='acctPaidFrom'>Account Paid From</label>
@@ -161,7 +170,6 @@ function CreateExpense({
             value={acctPaidFrom}
             onChange={handleAcctPaidFrom}
             autoComplete='off'
-            required={true}
           />
 
           <label htmlFor='expCategory'>Expense Category</label>
@@ -169,7 +177,6 @@ function CreateExpense({
             name='category'
             id='expCategory'
             onChange={handleExpCategory}
-            required={true}
           >
             <option value=''></option>
             <option value='1'>Housing</option>
@@ -187,10 +194,11 @@ function CreateExpense({
             value={expPaidTo}
             onChange={handleExpPaidTo}
             autoComplete='off'
-            required={true}
           />
 
-          <label htmlFor='expNotes'>Notes</label>
+          <label htmlFor='expNotes'>
+            Notes <span>(optional)</span>
+          </label>
           <input
             type='text'
             name='notes'

@@ -4,8 +4,9 @@
 
 .expense p {
   display: grid;
-  grid-template-columns: 4fr 1fr auto;
+  grid-template-columns: 4fr 1fr 10ch;
   gap: 1.5rem;
   margin-block-end: 0.25rem;
   color: rgb(238, 255, 179);
+  justify-items: start;
 }
