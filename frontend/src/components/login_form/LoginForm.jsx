@@ -43,7 +43,13 @@ function LoginForm({ setLogin, setCurrentUser }) {
         return;
       }
       if (response.ok) {
-        setLogin(false);
+        if (document.startViewTransition) {
+          document.startViewTransition(() => {
+            setLogin(false);
+          });
+        } else {
+          setLogin(false);
+        }
       }
       const currentUserRes = await fetch("/user");
       const currentUser = await currentUserRes.json();

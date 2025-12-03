@@ -64,13 +64,20 @@ function CreateUserForm({ setCreateUser, setLogin }) {
     } else {
       try {
         const response = await fetch("/user", options);
-        const newUserId = await response.json();
-        toasty(
-          `username ${email} was created`,
-          "linear-gradient(to top, rgba(143, 156, 96, 1), rgba(121, 131, 85, 1)",
-          "rgb(155, 168, 109)",
-        );
-        resetCreateUserForm();
+        const message = await response.json();
+        if (response.status === 201) {
+          toasty(
+            `username ${email} was created`,
+            "linear-gradient(to top, rgba(143, 156, 96, 1), rgba(121, 131, 85, 1)",
+            "rgb(155, 168, 109)",
+          );
+          resetCreateUserForm();
+        } else if (message.toString().includes("duplicate")) {
+          toasty("That username already exists");
+        } else {
+          toasty(message);
+        }
+
         return;
       } catch (error) {
         setError(error);
