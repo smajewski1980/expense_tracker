@@ -11,8 +11,8 @@ function Logout({ setLogin, setCurrentUser, setShowEditUserForm }) {
             setLogin(false);
             setCurrentUser("");
             setShowEditUserForm(false);
-            return;
           });
+        } else {
           setLogin(false);
           setCurrentUser("");
           setShowEditUserForm(false);
