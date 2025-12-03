@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Button from "../button/Button";
 import styles from "./EditExpenseForm.module.css";
+import toasty from "../../toasty";
 
 function EditExpenseForm({
   setShowEditExpForm,
@@ -72,6 +73,10 @@ function EditExpenseForm({
     setExpNotes(e.target.value);
   }
 
+  function emptyFields() {
+    return !expDate || !expAmt || !acctPaidFrom || !expCategory || !expPaidTo;
+  }
+
   function handleEditFormCancel(e) {
     e?.preventDefault();
     if (document.startViewTransition) {
@@ -101,6 +106,11 @@ function EditExpenseForm({
 
   async function handleEditExpForm(e) {
     e.preventDefault();
+
+    if (emptyFields()) {
+      return toasty("all fields are required except the notes");
+    }
+
     const editedExpense = generateExpObj();
     const options = {
       method: "PUT",
@@ -109,10 +119,15 @@ function EditExpenseForm({
       },
       body: JSON.stringify(editedExpense),
     };
+
     try {
       const res = await fetch(`/expense/${expIdToEdit}`, options);
       if (res.ok) {
-        alert(`exp id ${expIdToEdit} was updated`);
+        toasty(
+          "the expense was updated",
+          "linear-gradient(to top, rgba(143, 156, 96, 1), rgba(121, 131, 85, 1)",
+          "rgb(155, 168, 109)",
+        );
         handleEditFormCancel();
         return;
       }
@@ -121,7 +136,7 @@ function EditExpenseForm({
     }
   }
 
-  if (error) alert(error);
+  if (error) toasty(error);
 
   return (
     <>
@@ -137,7 +152,6 @@ function EditExpenseForm({
           name='date'
           onChange={handleExpDate}
           id='expDate'
-          required={true}
           value={expDate}
         />
 
@@ -149,7 +163,6 @@ function EditExpenseForm({
           id='expAmt'
           value={expAmt}
           autoComplete='off'
-          required={true}
         />
 
         <label htmlFor='acctPaidFrom'>Account Paid From</label>
@@ -160,7 +173,6 @@ function EditExpenseForm({
           value={acctPaidFrom}
           onChange={handleAcctPaidFrom}
           autoComplete='off'
-          required={true}
         />
 
         <label htmlFor='expCategory'>Expense Category</label>
@@ -168,7 +180,6 @@ function EditExpenseForm({
           name='category'
           id='expCategory'
           onChange={handleExpCategory}
-          required={true}
           value={expCategory}
         >
           <option value=''></option>
@@ -187,7 +198,6 @@ function EditExpenseForm({
           value={expPaidTo}
           onChange={handleExpPaidTo}
           autoComplete='off'
-          required={true}
         />
 
         <label htmlFor='expNotes'>Notes</label>
