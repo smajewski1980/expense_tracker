@@ -101,6 +101,7 @@ function CreateUserForm({ setCreateUser, setLogin }) {
         value={email}
         onChange={handleEmail}
         autoComplete='off'
+        autoFocus={true}
       />
       <label htmlFor='password'>Password</label>
       <input
@@ -126,7 +127,7 @@ function CreateUserForm({ setCreateUser, setLogin }) {
           text='Submit'
         />
         <Button
-          text='cancel'
+          text='Cancel'
           cb={handleCancelCreateUser}
         />
       </div>

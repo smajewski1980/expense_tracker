@@ -150,6 +150,7 @@ function CreateExpense({
             name='date'
             onChange={handleExpDate}
             id='expDate'
+            autoFocus={true}
           />
 
           <label htmlFor='expAmt'>Expense Amount</label>

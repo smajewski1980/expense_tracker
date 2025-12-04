@@ -78,7 +78,7 @@ function LoginForm({ setLogin, setCurrentUser }) {
       <div className={styles.loginBtnWrapper}>
         <Button text='Login' />
         <Button
-          text='back'
+          text='Back'
           cb={handleBackBtn}
         />
       </div>
@@ -90,6 +90,7 @@ function LoginForm({ setLogin, setCurrentUser }) {
         onChange={handleLoginEmail}
         id='login-email'
         autoComplete='off'
+        autoFocus={true}
       />
       <label htmlFor='login-password'>password</label>
       <input

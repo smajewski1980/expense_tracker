@@ -94,6 +94,7 @@ function EditUserForm({ currentUser, setCurrentUser, setShowEditUserForm }) {
         value={oldPw}
         onChange={handleEditOldPw}
         autoComplete='off'
+        autoFocus={true}
       />
 
       <label htmlFor='new-pw'>new password</label>

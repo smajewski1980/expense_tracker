@@ -10,3 +10,8 @@
   color: rgb(238, 255, 179);
   justify-items: start;
 }
+
+.expense p span:first-child {
+  padding-inline-start: 1rem;
+  text-indent: -1rem;
+}
