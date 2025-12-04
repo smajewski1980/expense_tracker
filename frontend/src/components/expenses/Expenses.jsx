@@ -40,7 +40,16 @@ function Expenses({ currentUser }) {
       try {
         const res = await fetch("/expense");
         const data = await res.json();
-        setExpenses(data);
+        const sortedData = data.sort((a, b) => {
+          if (a.expense_date < b.expense_date) {
+            return 1;
+          } else if (a.expense_date > b.expense_date) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        setExpenses(sortedData);
       } catch (error) {
         console.log(error);
       }
@@ -182,9 +191,11 @@ function Expenses({ currentUser }) {
             {typeof expenses === "string" && !showCreateExpForm && expenses}
             {typeof expenses !== "string" &&
               filterCategory === "" &&
-              expenses.map((exp) => {
-                return populateExp(exp);
-              })}
+              expenses
+                .sort((a, b) => a.expense_date < b.expense_date)
+                .map((exp) => {
+                  return populateExp(exp);
+                })}
             {typeof expenses !== "string" &&
               filterCategory !== "" &&
               filteredExpenses.map((exp) => {
